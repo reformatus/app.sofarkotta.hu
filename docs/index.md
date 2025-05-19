@@ -1,0 +1,3 @@
+# Sófár DalApp
+
+Hamarosan kezdünk...
