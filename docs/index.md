@@ -1,3 +1,6 @@
 # Sófár DalApp
 
-Hamarosan kezdünk...
+Vidd magaddal a Sófár kottákat!\
+*Hamarosan kezdünk...*
+
+#### Powered by [Lyric](https://lyricapp.org)
