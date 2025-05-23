@@ -5,26 +5,7 @@
 
 // Platform configuration
 const platformConfig = {
-    // Mobile platforms
-    ios: {
-        name: 'iOS',
-        icon: 'phone_iphone',
-        store: {
-            url: '#', // Coming soon
-            name: 'App Store',
-            available: false
-        },
-        package: {
-            url: null, // iOS does not support direct package installation
-            name: null,
-            available: false
-        },
-        beta: {
-            url: 'https://testflight.apple.com/join/EsV5pBEN',
-            name: 'TestFlight Beta',
-            available: true
-        }
-    },    android: {
+    android: {
         name: 'Android',
         icon: 'android',
         store: {
@@ -43,27 +24,26 @@ const platformConfig = {
             available: true
         }
     },
-    
-    // Desktop platforms
-    macos: {
-        name: 'macOS',
-        icon: 'laptop_mac',
+    ios: {
+        name: 'iOS',
+        icon: 'phone_iphone',
         store: {
             url: '#', // Coming soon
-            name: 'Mac App Store',
+            name: 'App Store',
             available: false
         },
         package: {
-            url: '#', // Coming soon
-            name: 'DMG File',
+            url: null, // iOS does not support direct package installation
+            name: null,
             available: false
         },
         beta: {
-            url: '#', // Coming soon
-            name: 'Mac Beta',
-            available: false
+            url: 'https://testflight.apple.com/join/EsV5pBEN',
+            name: 'TestFlight Beta',
+            available: true
         }
     },
+
     windows: {
         name: 'Windows',
         icon: 'desktop_windows',
@@ -80,6 +60,25 @@ const platformConfig = {
         beta: {
             url: '#', // Coming soon
             name: 'Windows Beta',
+            available: false
+        }
+    },
+    macos: {
+        name: 'macOS',
+        icon: 'laptop_mac',
+        store: {
+            url: '#', // Coming soon
+            name: 'Mac App Store',
+            available: false
+        },
+        package: {
+            url: '#', // Coming soon
+            name: 'DMG File',
+            available: false
+        },
+        beta: {
+            url: '#', // Coming soon
+            name: 'Mac Beta',
             available: false
         }
     },
@@ -102,50 +101,4 @@ const platformConfig = {
             available: false
         }
     }
-};
-
-// For backward compatibility with existing code
-const storeUrls = {
-    ios: platformConfig.ios.store.url,
-    android: platformConfig.android.store.url,
-    androidApk: platformConfig.android.package.url,
-    macos: platformConfig.macos.store.url,
-    windows: platformConfig.windows.store.url,
-    linux: platformConfig.linux.store.url,
-    // Beta URLs
-    iosBeta: platformConfig.ios.beta.url,
-    androidBeta: platformConfig.android.beta.url,
-    macosBeta: platformConfig.macos.beta.url,
-    windowsBeta: platformConfig.windows.beta.url,
-    linuxBeta: platformConfig.linux.beta.url
-};
-
-const storeNames = {
-    ios: platformConfig.ios.store.name,
-    android: platformConfig.android.store.name,
-    androidApk: platformConfig.android.package.name,
-    macos: platformConfig.macos.store.name,
-    windows: platformConfig.windows.store.name,
-    linux: platformConfig.linux.store.name,
-    // Beta names
-    iosBeta: platformConfig.ios.beta.name,
-    androidBeta: platformConfig.android.beta.name,
-    macosBeta: platformConfig.macos.beta.name,
-    windowsBeta: platformConfig.windows.beta.name,
-    linuxBeta: platformConfig.linux.beta.name
-};
-
-const storeAvailability = {
-    ios: platformConfig.ios.store.available,
-    android: platformConfig.android.store.available,
-    androidApk: platformConfig.android.package.available,
-    macos: platformConfig.macos.store.available,
-    windows: platformConfig.windows.store.available,
-    linux: platformConfig.linux.store.available,
-    // Beta availability
-    iosBeta: platformConfig.ios.beta.available,
-    androidBeta: platformConfig.android.beta.available,
-    macosBeta: platformConfig.macos.beta.available,
-    windowsBeta: platformConfig.windows.beta.available,
-    linuxBeta: platformConfig.linux.beta.available
 };
