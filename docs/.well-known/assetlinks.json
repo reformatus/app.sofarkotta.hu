@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "org.lyricapp.sofar",
+    "sha256_cert_fingerprints":
+    ["97:60:19:7B:DA:FF:BE:AD:0D:8F:3C:C0:60:74:75:7C:F0:27:8F:2A:0C:19:0F:82:D7:D1:53:4C:70:1C:D7:95"]
+  }
+}]

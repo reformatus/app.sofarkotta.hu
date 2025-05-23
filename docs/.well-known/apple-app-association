@@ -1,0 +1,21 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "MYUTW2GF6J.org.lyricapp.sofar"
+        ],
+        "paths": [
+          "/launch",
+          "/launch/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "MYUTW2GF6J.org.lyricapp.sofar"
+    ]
+  }
+}
