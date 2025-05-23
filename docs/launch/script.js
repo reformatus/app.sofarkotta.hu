@@ -128,11 +128,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function parseLinkAndUpdateUI() {
-    const currentUrl = window.location.href;
-    const url = new URL(currentUrl);
-    const pathname = url.pathname;
-    const search = url.search;
-    const hash = url.hash;
+    // First check if we have an original path stored from the 404 redirect
+    const originalPath = sessionStorage.getItem('originalPath');
+    let pathname, search, hash;
+    
+    if (originalPath) {
+        // Use the original path that was redirected from 404
+        const url = new URL(window.location.origin + originalPath);
+        pathname = url.pathname;
+        search = url.search;
+        hash = url.hash;
+        
+        // Clear the stored path so it doesn't interfere with future navigation
+        sessionStorage.removeItem('originalPath');
+        
+        console.log('Using original path from redirect:', originalPath);
+    } else {
+        // Use the current URL
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        pathname = url.pathname;
+        search = url.search;
+        hash = url.hash;
+    }
     
     // Extract path after /launch/
     const launchMatch = pathname.match(/\/launch\/?(.*)/);

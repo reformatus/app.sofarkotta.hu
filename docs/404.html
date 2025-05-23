@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Átirányítás...</title>
+    <script>
+        // GitHub Pages SPA redirect script
+        // This script handles client-side routing for GitHub Pages
+        (function() {
+            var path = window.location.pathname;
+            var search = window.location.search;
+            var hash = window.location.hash;
+            
+            // Check if this is a launch path that's not already at the launch index
+            if (path.startsWith('/launch/') && path !== '/launch/' && path !== '/launch/index.html') {
+                // Store the original path in session storage so the launch page can access it
+                sessionStorage.setItem('originalPath', path + search + hash);
+                // Redirect to the launch page
+                window.location.replace(window.location.origin + '/launch/');
+            } else if (path === '/launch') {
+                // Handle /launch without trailing slash
+                window.location.replace(window.location.origin + '/launch/');
+            } else {
+                // For other 404s, redirect to the main page
+                window.location.replace(window.location.origin + '/');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>Átirányítás...</p>
+</body>
+</html>

@@ -1,1 +1,14 @@
 include: [".well-known"]
+
+# GitHub Pages configuration for SPA routing
+plugins:
+  - jekyll-redirect-from
+
+# Enable trailing slashes for better routing
+permalink: pretty
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
