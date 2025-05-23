@@ -178,12 +178,12 @@ function updateDescriptionForPath(path, search) {
         // Handle specific cases
         if (path.startsWith('song/')) {
             const songId = path.replace('song/', '');
-            descriptionEl.innerHTML = `Megnyitottad egy dal linkjét:<br><strong>Dal ID: ${songId}</strong>`;
+            descriptionEl.innerHTML = `Egy dal linkjét nyitottad meg.<br><strong>Dal ID: ${songId}</strong>`;
         } else if (path === 'cueJson' && search) {
             handleCueJsonLink(search, descriptionEl);
         } else {
             // Generic case
-            descriptionEl.innerHTML = `Megnyitottad a következő linket:<br><strong>/${path}</strong>`;
+            descriptionEl.innerHTML = `Linket nyitottál meg:<br><strong>/${path}</strong>`;
         }
         
         // Restore opacity
@@ -202,7 +202,7 @@ function handleCueJsonLink(search, descriptionEl) {
             const description = cueData.description || '';
             const slideCount = cueData.content ? cueData.content.length : 0;
             
-            let html = `Megnyitottad egy dalszöveg-importálás linkjét:<br><strong>${title}</strong>`;
+            let html = `Listaimportáló linket nyitottál meg:<br><strong>${title}</strong>`;
             if (description) {
                 html += `<br><em>${description}</em>`;
             }
@@ -210,11 +210,11 @@ function handleCueJsonLink(search, descriptionEl) {
             
             descriptionEl.innerHTML = html;
         } else {
-            descriptionEl.innerHTML = 'Megnyitottad egy dalszöveg-importálás linkjét.';
+            descriptionEl.innerHTML = 'Listaimportáló linket nyitottál meg.';
         }
     } catch (error) {
         console.error('Error parsing cue JSON:', error);
-        descriptionEl.innerHTML = 'Megnyitottad egy dalszöveg-importálás linkjét.';
+        descriptionEl.innerHTML = 'Listaimportáló linket nyitottál meg.';
     }
     
     // Restore opacity (called from updateDescriptionForPath)
