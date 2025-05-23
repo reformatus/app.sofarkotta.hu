@@ -81,35 +81,41 @@ function generateDownloadRows(containerId, includeCancel = false) {
     
     // Clear existing content
     containerElement.innerHTML = '';
-    
-    // Add platform options
+      // Add platform options
     Object.keys(platformConfig).forEach(platformId => {
         const platform = platformConfig[platformId];
+        
+        // Check any download option is available
+        const hasAnyDownload = platform.store.available || 
+                              platform.package.available || 
+                              platform.beta.available;
         
         // Create download row for each platform
         const downloadRow = document.createElement('div');
         downloadRow.className = 'download-row';
-        if (!platform.store.available && !platform.package.available) {
+        if (!hasAnyDownload) {
             downloadRow.classList.add('disabled');
         }
-        
-        // Platform icon and info
+          // Platform icon and info
         downloadRow.innerHTML = `
             <div class="platform-icon">
                 <span class="material-icons">${platform.icon}</span>
             </div>
             <div class="download-info">
                 <div class="platform-name">${platform.name}</div>
-                <div class="download-type">${platform.store.available || platform.package.available ? 'Letöltési lehetőségek' : 'Hamarosan'}</div>
-            </div>
-            <div class="download-options">
+                ${!hasAnyDownload ? '<div class="download-type">Hamarosan</div>' : ''}
+            </div>            <div class="download-options">
                 ${platform.store.available ? 
                     `<button class="download-option primary" onclick="downloadFromStore('${platformId}', 'store')">
-                        <span class="material-icons">download</span>${platform.store.name.split(' ')[0]}
+                        <span class="material-icons">download</span>${platform.store.name}
                     </button>` : ''}
                 ${platform.package.available && platform.package.url ? 
                     `<button class="download-option" onclick="downloadFromStore('${platformId}', 'package')">
-                        <span class="material-icons">download</span>${platform.package.name.split(' ')[0]}
+                        <span class="material-icons">download</span>${platform.package.name}
+                    </button>` : ''}
+                ${platform.beta.available ? 
+                    `<button class="download-option beta" onclick="downloadFromStore('${platformId}', 'beta')">
+                        <span class="material-icons">science</span>${platform.beta.name}
                     </button>` : ''}
             </div>
         `;
@@ -139,6 +145,8 @@ function downloadFromStore(platformId, type = 'store') {
         window.open(platform.store.url, '_blank');
     } else if (type === 'package' && platform.package.available) {
         window.open(platform.package.url, '_blank');
+    } else if (type === 'beta' && platform.beta.available) {
+        window.open(platform.beta.url, '_blank');
     } else {
         alert('Ez a verzió még nem érhető el. Hamarosan!');
     }

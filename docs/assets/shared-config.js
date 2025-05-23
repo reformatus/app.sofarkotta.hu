@@ -10,27 +10,36 @@ const platformConfig = {
         name: 'iOS',
         icon: 'phone_iphone',
         store: {
-            url: 'https://testflight.apple.com/join/EsV5pBEN',
-            name: 'App Store (TestFlight)',
-            available: true
+            url: '#', // Coming soon
+            name: 'App Store',
+            available: false
         },
         package: {
             url: null, // iOS does not support direct package installation
             name: null,
             available: false
+        },
+        beta: {
+            url: 'https://testflight.apple.com/join/EsV5pBEN',
+            name: 'TestFlight Beta',
+            available: true
         }
-    },
-    android: {
+    },    android: {
         name: 'Android',
         icon: 'android',
         store: {
-            url: 'https://play.google.com/apps/testing/org.lyricapp.sofar',
+            url: '#', // Coming soon
             name: 'Google Play',
-            available: true
+            available: false
         },
         package: {
             url: 'https://github.com/reformatus/lyric/releases/latest',
-            name: 'APK Download',
+            name: 'APK',
+            available: true
+        },
+        beta: {
+            url: 'https://play.google.com/apps/testing/org.lyricapp.sofar',
+            name: 'Google Play Beta',
             available: true
         }
     },
@@ -48,6 +57,11 @@ const platformConfig = {
             url: '#', // Coming soon
             name: 'DMG File',
             available: false
+        },
+        beta: {
+            url: '#', // Coming soon
+            name: 'Mac Beta',
+            available: false
         }
     },
     windows: {
@@ -61,6 +75,11 @@ const platformConfig = {
         package: {
             url: '#', // Coming soon
             name: 'Installer',
+            available: false
+        },
+        beta: {
+            url: '#', // Coming soon
+            name: 'Windows Beta',
             available: false
         }
     },
@@ -76,6 +95,11 @@ const platformConfig = {
             url: '#', // Coming soon
             name: 'Package',
             available: false
+        },
+        beta: {
+            url: '#', // Coming soon
+            name: 'Linux Beta',
+            available: false
         }
     }
 };
@@ -87,7 +111,13 @@ const storeUrls = {
     androidApk: platformConfig.android.package.url,
     macos: platformConfig.macos.store.url,
     windows: platformConfig.windows.store.url,
-    linux: platformConfig.linux.store.url
+    linux: platformConfig.linux.store.url,
+    // Beta URLs
+    iosBeta: platformConfig.ios.beta.url,
+    androidBeta: platformConfig.android.beta.url,
+    macosBeta: platformConfig.macos.beta.url,
+    windowsBeta: platformConfig.windows.beta.url,
+    linuxBeta: platformConfig.linux.beta.url
 };
 
 const storeNames = {
@@ -96,7 +126,13 @@ const storeNames = {
     androidApk: platformConfig.android.package.name,
     macos: platformConfig.macos.store.name,
     windows: platformConfig.windows.store.name,
-    linux: platformConfig.linux.store.name
+    linux: platformConfig.linux.store.name,
+    // Beta names
+    iosBeta: platformConfig.ios.beta.name,
+    androidBeta: platformConfig.android.beta.name,
+    macosBeta: platformConfig.macos.beta.name,
+    windowsBeta: platformConfig.windows.beta.name,
+    linuxBeta: platformConfig.linux.beta.name
 };
 
 const storeAvailability = {
@@ -105,5 +141,11 @@ const storeAvailability = {
     androidApk: platformConfig.android.package.available,
     macos: platformConfig.macos.store.available,
     windows: platformConfig.windows.store.available,
-    linux: platformConfig.linux.store.available
+    linux: platformConfig.linux.store.available,
+    // Beta availability
+    iosBeta: platformConfig.ios.beta.available,
+    androidBeta: platformConfig.android.beta.available,
+    macosBeta: platformConfig.macos.beta.available,
+    windowsBeta: platformConfig.windows.beta.available,
+    linuxBeta: platformConfig.linux.beta.available
 };

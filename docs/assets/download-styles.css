@@ -15,9 +15,10 @@
     background-color: white;
     transition: all 0.2s ease;
     align-items: center;
+    cursor: default;
 }
 
-.download-row:hover {
+.download-row:hover:not(.disabled) {
     background-color: #f9fafb;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -41,6 +42,13 @@
 
 .download-row .platform-icon .material-icons {
     font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    margin: 0;
 }
 
 .download-row .download-info {
@@ -61,6 +69,7 @@
 
 .download-row .download-options {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     justify-content: flex-end;
 }
@@ -78,10 +87,19 @@
     display: flex;
     align-items: center;
     gap: 4px;
+    text-align: left;
+    min-height: 32px;
+    word-break: keep-all;
+    white-space: nowrap;
 }
 
 .download-option.primary {
     background-color: #55928e;
+    color: white;
+}
+
+.download-option.beta {
+    background-color: #f59e0b;
     color: white;
 }
 
@@ -92,6 +110,10 @@
 
 .download-option.primary:hover {
     background-color: #467a77;
+}
+
+.download-option.beta:hover {
+    background-color: #d97706;
 }
 
 .download-option .material-icons {
@@ -123,6 +145,65 @@
     margin-right: 6px;
 }
 
+/* Platform cards (used on main page) */
+.platform-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+
+.platform-card:hover:not(.disabled) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.platform-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.platform-card .platform-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf2f7;
+    border-radius: 12px;
+    color: #4a5568;
+}
+
+.platform-card .platform-icon .material-icons {
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    line-height: 1;
+    margin: 0;
+}
+
+.platform-card .platform-name {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #2d3748;
+}
+
+.platform-card .platform-status {
+    font-size: 14px;
+    color: #718096;
+    margin-bottom: 16px;
+    font-style: italic;
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
     .download-row {
@@ -134,5 +215,12 @@
         grid-column: 1 / -1;
         justify-content: flex-start;
         margin-top: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    .download-option {
+        width: 100%;
     }
 }

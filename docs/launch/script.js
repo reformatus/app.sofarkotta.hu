@@ -16,38 +16,58 @@ function updateDownloadButton() {
     
     setTimeout(() => {
         try {
-            // Check if we have a valid platform and if there's an available store URL
+            // Check if we have a valid platform and if there's an available download option
             if (platformId && platformConfig[platformId]) {
                 const platform = platformConfig[platformId];
                 console.log("Platform config:", platform);
                 
+                // Check download availability in this order: 1. Store, 2. Beta, 3. Package
                 if (platform.store.available) {
-                    // Show "App letöltése" as a label above the button
+                    // Official store is available
                     downloadLabel.textContent = `${platform.name} alkalmazás letöltése`;
                     downloadLabel.classList.add('visible');
                     
-                    // Set store name and URL with platform name
                     downloadText.innerHTML = `<strong>${platform.name} - ${platform.store.name}</strong>`;
                     downloadBtn.href = platform.store.url;
                     downloadBtn.onclick = null; // Remove click handler, use normal link behavior
                     
-                    // Give visual feedback that this is for your current platform
                     downloadBtnContainer.classList.add('platform-detected');
+                    downloadBtnContainer.classList.remove('beta-button');
+                } else if (platform.beta.available) {
+                    // Beta is available
+                    downloadLabel.textContent = `${platform.name} béta letöltése`;
+                    downloadLabel.classList.add('visible');
+                    
+                    downloadText.innerHTML = `<strong>${platform.name} - ${platform.beta.name} (Béta)</strong>`;
+                    downloadBtn.href = platform.beta.url;
+                    downloadBtn.onclick = null; // Remove click handler, use normal link behavior
+                    
+                    downloadBtnContainer.classList.add('platform-detected');
+                    downloadBtnContainer.classList.add('beta-button');
+                } else if (platform.package.available) {
+                    // Package download is available
+                    downloadLabel.textContent = `${platform.name} alkalmazás letöltése`;
+                    downloadLabel.classList.add('visible');
+                    
+                    downloadText.innerHTML = `<strong>${platform.name} - ${platform.package.name}</strong>`;
+                    downloadBtn.href = platform.package.url;
+                    downloadBtn.onclick = null; // Remove click handler, use normal link behavior
+                    
+                    downloadBtnContainer.classList.add('platform-detected');
+                    downloadBtnContainer.classList.remove('beta-button');
                 } else {
-                    // Hide the label for default state
+                    // Nothing is available for this platform yet
                     downloadLabel.classList.remove('visible');
                     
-                    // Default state with platform name if available
                     downloadBtn.href = '#';
-                    downloadText.textContent = platformId ? 
-                        `${platform.name} verzió hamarosan` : 
-                        'Alkalmazás letöltése';
+                    downloadText.textContent = `${platform.name} verzió hamarosan`;
                     downloadBtn.onclick = function(e) {
                         e.preventDefault();
                         showStoreDialog();
                     };
                     
                     downloadBtnContainer.classList.remove('platform-detected');
+                    downloadBtnContainer.classList.remove('beta-button');
                 }
             } else {
                 // Handle unknown platform
@@ -60,6 +80,7 @@ function updateDownloadButton() {
                 };
                 
                 downloadBtnContainer.classList.remove('platform-detected');
+                downloadBtnContainer.classList.remove('beta-button');
             }
         } catch (error) {
             console.error("Error updating download button:", error);
@@ -73,9 +94,9 @@ function updateDownloadButton() {
             };
             
             downloadBtnContainer.classList.remove('platform-detected');
+            downloadBtnContainer.classList.remove('beta-button');
         }
-        
-        // Restore opacity
+          // Restore opacity
         downloadBtn.style.opacity = '1';
     }, 100);
 }

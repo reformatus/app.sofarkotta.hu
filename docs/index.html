@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="hu">
-<head>    <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sófár DalApp</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -11,33 +12,188 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f5;
+            background: #ffffff;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Two-column layout */
+        .layout-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .column {
+            background: #ffffff;
+            border-radius: 0;
+            box-shadow: none;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .column-content {
+            flex: 1;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .downloads-column .column-content {
+            padding-top: 26px;
+        }
+        
+        .app-info-column {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
         }
 
-        .main-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            text-align: center;
+        .downloads-column {
+            background: #f9fafb;
+        }
+        
+        .column-footer {
+            padding: 20px 24px;
+            margin-top: auto;
+            border-top: 1px solid #f0f0f0;
+            background: rgba(248, 250, 252, 0.5);
+        }
+          .webapp-section-inline {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            text-align: left;
+            margin-top: 32px;
+            margin-bottom: 24px;
             max-width: 600px;
-            width: 100%;
-            margin-top: 40px;
-            margin-bottom: 30px;
+        }
+        
+        .webapp-content {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+            margin-bottom: 14px;
+        }
+        
+        .webapp-icon {
+            flex-shrink: 0;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .webapp-icon .material-icons {
+            font-size: 60px;
+            color: #c2a03f;
+            display: block;
+            line-height: 1;
+        }
+        
+        .webapp-text {
+            text-align: left;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .webapp-section-inline .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 0 0 4px 0;
+            padding: 0;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .webapp-description {
+            font-size: 15px;
+            color: #4a5568;
+            margin: 0;
+            line-height: 1.4;
+            text-align: left;
+            max-width: 100%;
+            display: inline-block;
+        }
+        
+        .webapp-button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0;
+        }
+            
+        .webapp-btn {
+            padding: 12px 22px;
+            font-size: 15px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #c2a03f 0%, #a8892d 100%);
+            border: none;
+            box-shadow: 0 3px 10px rgba(194, 160, 63, 0.3);
+        }
+        
+        .webapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(194, 160, 63, 0.4);
+        }
+
+        .downloads-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }        .downloads-section .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+        
+        .downloads-column .column-content {
+            padding-top: 15vh;
+        }
+
+        .downloads-description {
+            font-size: 15px;
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .app-info-column .column-content {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 15vh;
         }
 
         .app-icon {
             width: 100px;
             height: 100px;
-            margin: 0 auto 24px;
+            margin: 0 0 24px 0;
             display: block;
         }
 
@@ -60,8 +216,9 @@
             font-style: italic;
             font-size: 16px;
             color: #718096;
-            margin-bottom: 32px;
-        }        .section-title {
+        }
+        
+        .section-title {
             font-size: 22px;
             font-weight: 600;
             color: #2d3748;
@@ -69,59 +226,15 @@
             margin-bottom: 24px;
             text-align: center;
         }
-
+        
         .downloads-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin: 0 auto 32px;
+            gap: 12px;
+            margin: 0 auto;
             max-width: 520px;
             width: 100%;
-        }
-
-        .platform-card {
-            background: #f9fafb;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .platform-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-        }
-
-        .platform-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #edf2f7;
-            border-radius: 12px;
-            color: #4a5568;
-        }
-
-        .platform-icon .material-icons {
-            font-size: 28px;
-        }
-
-        .platform-name {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #2d3748;
-        }
-
-        .platform-status {
-            font-size: 14px;
-            color: #718096;
-            margin-bottom: 16px;
-            font-style: italic;
+            flex: 1;
         }
 
         .btn {
@@ -176,18 +289,18 @@
             background: #e2e8f0;
             margin: 40px 0 32px;
         }
-
-        .footer {
+          .column-footer {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .footer-links {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -213,28 +326,128 @@
         .powered-by {
             font-size: 14px;
             color: #718096;
-            margin-top: 24px;
+            margin: 0;
+            white-space: nowrap;
         }
 
         .powered-by a {
             color: #55928e;
             text-decoration: none;
             transition: color 0.2s ease;
-        }
-
-        .powered-by a:hover {
+        }        .powered-by a:hover {
             color: #c2a03f;
         }
-
+          /* Page footer for mobile/tablet */
+        .page-footer {
+            display: none;
+            padding: 24px;
+            background: rgba(248, 250, 252, 0.5);
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .page-footer .footer-links {
+            justify-content: center;
+        }
+        
+        .page-footer .powered-by {
+            text-align: center;
+            margin-top: 16px;
+        }
+          /* Tablet layout */
+        @media (max-width: 1024px) {
+            .column-footer {
+                display: none;
+            }
+            
+            .page-footer {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .page-footer .footer-links {
+                justify-content: flex-start;
+            }
+            
+            .page-footer .powered-by {
+                margin: 0;
+                text-align: right;
+            }
+            
+            .layout-container {
+                display: block;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .column {
+                min-height: auto;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                overflow: visible;
+            }
+            
+            .column:last-child {
+                border-bottom: none;
+            }              .app-info-column .column-content {
+                padding-top: 32px;
+                justify-content: flex-start;
+                text-align: center;
+            }
+            
+            .downloads-column .column-content {
+                padding-top: 32px;
+            }
+              .app-icon {
+                margin: 0 auto 24px;
+            }
+            
+            .webapp-section-inline {
+                margin-left: auto;
+                margin-right: auto;
+            }
+              .downloads-section .section-title {
+                margin-top: 0;
+            }
+        }
+          /* Very wide screens - add symmetric padding to first column */
+        @media (min-width: 1400px) {
+            .app-info-column .column-content {
+                padding-left: 5vw;
+                padding-right: 5vw;
+            }        }
+          /* Small mobile layout */
         @media (max-width: 640px) {
-            .main-card {
-                padding: 30px 20px;
+            .column-footer {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+                justify-content: center;
             }
-
-            .downloads-grid {
-                grid-template-columns: 1fr;
+            
+            .page-footer {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+                justify-content: center;
             }
-
+            
+            .page-footer .footer-links {
+                justify-content: center;
+            }
+            
+            .page-footer .powered-by {
+                text-align: center;
+            }
+            
+            .column-content {
+                padding: 24px 20px;
+            }
+            
             .app-icon {
                 width: 80px;
                 height: 80px;
@@ -243,25 +456,124 @@
             .app-name {
                 font-size: 28px;
             }
+            
+            .webapp-section-inline {
+                padding: 20px 16px;
+            }
+            
+            .webapp-content {
+                flex-direction: column;
+                gap: 6px;
+                align-items: center;
+            }
+            
+            .webapp-text {
+                text-align: center;
+                width: 100%;
+            }
+            
+            .webapp-icon {
+                width: 56px;
+                height: 56px;
+                margin: 0 0 4px 0;
+            }
+
+            .webapp-icon .material-icons {
+                font-size: 52px;
+            }
+            
+            .webapp-section-inline .section-title {
+                font-size: 19px;
+                margin-bottom: 4px;
+                text-align: center;
+            }
+            
+            .webapp-button-container {
+                justify-content: center;
+                margin-top: 12px;
+            }
+            
+            .webapp-description {
+                text-align: center;
+                display: block;
+            }
+
+            .webapp-btn {
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+
+            .downloads-section .section-title {
+                font-size: 20px;
+            }
+
+            .webapp-description,
+            .downloads-description {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="main-card">
-        <img src="assets/sofar_dalapp_rounded.svg" alt="Sófár DalApp ikon" class="app-icon">
-        
-        <h1 class="app-name">Sófár DalApp</h1>
-        <p class="tagline">Vidd magaddal a Sófár kottákat!</p>
-        <p class="coming-soon">Hamarosan kezdünk...</p>
-
-        <h2 class="section-title">Bétateszt letöltése</h2>
-        
-        <div class="downloads-container" id="downloads-container">
-            <!-- Platform download rows will be dynamically generated here -->
+    <div class="layout-container">
+        <!-- Column 1: App info, webapp section, and footer -->
+        <div class="column app-info-column">
+            <div class="column-content">
+                <img src="assets/sofar_dalapp_rounded.svg" alt="Sófár DalApp ikon" class="app-icon">
+                <h1 class="app-name">Sófár DalApp</h1>
+                <p class="tagline">Vidd magaddal a Sófár kottákat!</p>
+                <p class="coming-soon">Hamarosan kezdünk...</p>
+                
+                <!-- Webapp section moved here -->
+                <div class="webapp-section-inline">
+                    <div class="webapp-content">
+                        <div class="webapp-icon">
+                            <span class="material-icons">language</span>
+                        </div>
+                        <div class="webapp-text">
+                            <h2 class="section-title">Webes alkalmazás</h2>
+                            <p class="webapp-description">Böngészőben azonnal használható, telepítés nélkül</p>
+                        </div>
+                    </div>
+                    <div class="webapp-button-container">
+                        <a href="https://app.sofarkotta.hu/web" class="btn btn-primary webapp-btn">
+                            <span class="material-icons">public</span>
+                            Megnyitás
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="column-footer">
+                <div class="footer-links">
+                    <a href="https://github.com/reformatus/lyric" class="footer-link">
+                        <span class="material-icons">code</span>
+                        Forráskód
+                    </a>
+                    <a href="/privacy" class="footer-link">
+                        <span class="material-icons">policy</span>
+                        Adatkezelési tájékoztató
+                    </a>
+                </div>
+                <p class="powered-by">Powered by <a href="https://lyricapp.org">Lyric</a></p>
+            </div>
         </div>
-        
-        <div class="divider"></div>
-        
+
+        <!-- Column 2: App downloads -->
+        <div class="column downloads-column">
+            <div class="column-content">
+                <div class="downloads-section">
+                    <h2 class="section-title">App letöltése</h2>
+                    <p class="downloads-description">Telepítsd fel az eszközödre a teljes funkcionalitásért</p>
+                      <div class="downloads-container" id="downloads-container">
+                        <!-- Platform download rows will be dynamically generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page footer for mobile/tablet -->
+    <div class="page-footer">
         <div class="footer-links">
             <a href="https://github.com/reformatus/lyric" class="footer-link">
                 <span class="material-icons">code</span>
@@ -272,8 +584,8 @@
                 Adatkezelési tájékoztató
             </a>
         </div>
-        
         <p class="powered-by">Powered by <a href="https://lyricapp.org">Lyric</a></p>
+    </div>
     </div>
 
     <script src="assets/shared-config.js"></script>

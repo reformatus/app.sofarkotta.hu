@@ -167,6 +167,20 @@ body {
     animation: pulse 2s infinite;
 }
 
+.btn-primary.beta-button {
+    background-color: #f59e0b; /* Orange for beta */
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-primary.beta-button:hover {
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.btn-primary.beta-button.platform-detected {
+    background-color: #d97706; /* Darker orange for detected beta */
+    animation: pulseBeta 2s infinite;
+}
+
 @keyframes pulse {
     0% {
         box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
@@ -176,6 +190,18 @@ body {
     }
     100% {
         box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
+    }
+}
+
+@keyframes pulseBeta {
+    0% {
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.6);
+    }
+    100% {
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
     }
 }
 
@@ -273,30 +299,24 @@ body {
     cursor: pointer;
 }
 
-.download-row:hover {
-    border-color: #c2a03f;
-    background-color: #fefcf3;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* Launch page specific download row styles */
+.store-dialog .download-row {
+    margin-bottom: 12px;
+    /* Use the shared styles from download-styles.css for other properties */
 }
 
-.download-row.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.download-row .platform-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background-color: #f3f4f6;
-}
+/* No need to override more styles since we're using the shared CSS */
 
 .download-row .platform-icon .material-icons {
     font-size: 24px;
     color: #4a5568;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    margin: 0;
 }
 
 .download-row .download-info {
