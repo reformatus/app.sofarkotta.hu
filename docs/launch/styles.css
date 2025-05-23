@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.launch-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    margin-top: 60px;
+    min-height: 400px; /* Prevent card height jumping */
+}
+
+.app-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.app-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.description {
+    font-size: 16px;
+    color: #4a5568;
+    line-height: 1.5;
+    margin-bottom: 32px;
+    min-height: 48px; /* Prevent height jumping */
+    transition: opacity 0.3s ease;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.download-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px; /* Add extra space after the download section */
+}
+
+.download-label {
+    text-align: left;
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 8px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.download-label.visible {
+    opacity: 1;
+}
+
+.btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    min-height: 52px; /* Prevent height jumping */
+    white-space: nowrap; /* Prevent text wrapping that could cause jumps */
+}
+
+.btn-with-options {
+    padding: 0;
+    overflow: hidden;
+    min-width: 280px; /* Prevent width jumping on text changes */
+    display: flex;
+    align-items: stretch; /* Ensure equal height of children */
+}
+
+.btn-main {
+    flex: 1;
+    padding: 14px 15px;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s ease; /* Smooth text changes */
+    min-height: 52px; /* Match parent button height */
+    overflow: hidden; /* Prevent text overflow */
+}
+
+#downloadText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Maximum width for the text */
+}
+
+.btn-options {
+    flex: 0 0 44px; /* Fixed width for the options button */
+    padding: 0;
+    border: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.1);
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+    min-height: 52px; /* Match the main button height */
+}
+
+.btn-options:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.btn-options .material-icons {
+    margin: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: #c2a03f;
+    color: white;
+    box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(194, 160, 63, 0.4);
+}
+
+.btn-primary.platform-detected {
+    background-color: #af912d; /* Slightly darker to indicate detected platform */
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 15px rgba(194, 160, 63, 0.6);
+    }
+    100% {
+        box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
+    }
+}
+
+.btn-secondary {
+    background-color: #55928e;
+    color: white;
+    box-shadow: 0 2px 8px rgba(85, 146, 142, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(85, 146, 142, 0.4);
+}
+
+.btn-tertiary {
+    background-color: white;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-tertiary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #c2a03f;
+}
+
+.material-icons {
+    margin-right: 8px;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+/* Store selection dialog */
+.store-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.store-dialog.show {
+    display: flex;
+}
+
+.dialog-content {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 16px;
+}
+
+.dialog-subtitle {
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 24px;
+}
+
+.store-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.download-row {
+    display: grid;
+    grid-template-columns: 40px auto 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.download-row:hover {
+    border-color: #c2a03f;
+    background-color: #fefcf3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.download-row.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.download-row .platform-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+}
+
+.download-row .platform-icon .material-icons {
+    font-size: 24px;
+    color: #4a5568;
+}
+
+.download-row .download-info {
+    text-align: left;
+}
+
+.download-row .platform-name {
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+.download-row .download-type {
+    font-size: 12px;
+    color: #718096;
+}
+
+.download-row .download-options {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.download-option {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: #f3f4f6;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4a5568;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.download-option.primary {
+    background-color: #55928e;
+    color: white;
+}
+
+.download-option:hover {
+    background-color: #c2a03f;
+    color: white;
+}
+
+.download-option.primary:hover {
+    background-color: #467a77;
+}
+
+.download-option .material-icons {
+    font-size: 16px;
+}
+
+.store-btn {
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+    position: relative;
+}
+
+.store-btn.cancel-btn {
+    background-color: #f3f4f6;
+    margin-top: 12px;
+}
+
+.store-status {
+    font-size: 11px;
+    position: absolute;
+    bottom: 4px;
+    right: 8px;
+    color: #888;
+    font-style: italic;
+}
+
+.store-btn:hover {
+    border-color: #c2a03f;
+    background: #fefcf3;
+    transform: translateY(-1px);
+}
+
+.store-btn .material-icons {
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+@media (max-width: 480px) {
+    .launch-card {
+        padding: 30px 20px;
+        margin-top: 40px;
+    }
+
+    .app-name {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 15px;
+    }
+
+    .store-options {
+        grid-template-columns: 1fr;
+    }
+}

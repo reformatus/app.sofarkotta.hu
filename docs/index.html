@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sófár DalApp</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/download-styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            display: block;
+        }
+
+        .app-name {
+            font-size: 32px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .coming-soon {
+            font-style: italic;
+            font-size: 16px;
+            color: #718096;
+            margin-bottom: 32px;
+        }        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-top: 32px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .downloads-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 0 auto 32px;
+            max-width: 520px;
+            width: 100%;
+        }
+
+        .platform-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .platform-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #edf2f7;
+            border-radius: 12px;
+            color: #4a5568;
+        }
+
+        .platform-icon .material-icons {
+            font-size: 28px;
+        }
+
+        .platform-name {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .platform-status {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn-primary {
+            background-color: #c2a03f;
+            color: white;
+            box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(194, 160, 63, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #c2a03f;
+            color: #c2a03f;
+        }
+
+        .btn-disabled {
+            background-color: #e2e8f0;
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        .btn .material-icons {
+            margin-right: 8px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 40px 0 32px;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: #c2a03f;
+        }
+
+        .footer-link .material-icons {
+            font-size: 18px;
+            margin-right: 6px;
+        }
+
+        .powered-by {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 24px;
+        }
+
+        .powered-by a {
+            color: #55928e;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .powered-by a:hover {
+            color: #c2a03f;
+        }
+
+        @media (max-width: 640px) {
+            .main-card {
+                padding: 30px 20px;
+            }
+
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .app-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .app-name {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-card">
+        <img src="assets/sofar_dalapp_rounded.svg" alt="Sófár DalApp ikon" class="app-icon">
+        
+        <h1 class="app-name">Sófár DalApp</h1>
+        <p class="tagline">Vidd magaddal a Sófár kottákat!</p>
+        <p class="coming-soon">Hamarosan kezdünk...</p>
+
+        <h2 class="section-title">Bétateszt letöltése</h2>
+        
+        <div class="downloads-container" id="downloads-container">
+            <!-- Platform download rows will be dynamically generated here -->
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="footer-links">
+            <a href="https://github.com/reformatus/lyric" class="footer-link">
+                <span class="material-icons">code</span>
+                Forráskód
+            </a>
+            <a href="/privacy" class="footer-link">
+                <span class="material-icons">policy</span>
+                Adatkezelési tájékoztató
+            </a>
+        </div>
+        
+        <p class="powered-by">Powered by <a href="https://lyricapp.org">Lyric</a></p>
+    </div>
+
+    <script src="assets/shared-config.js"></script>
+    <script src="assets/common.js"></script>
+    <script src="assets/main.js"></script>
+</body>
+</html>

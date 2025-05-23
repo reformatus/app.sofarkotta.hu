@@ -1,0 +1,138 @@
+/**
+ * Shared styles for download options
+ * Used by both main page and launch page
+ */
+
+/* Download rows (table layout) */
+.download-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 8px;
+    background-color: white;
+    transition: all 0.2s ease;
+    align-items: center;
+}
+
+.download-row:hover {
+    background-color: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.download-row.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.download-row .platform-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf2f7;
+    border-radius: 8px;
+    color: #4a5568;
+}
+
+.download-row .platform-icon .material-icons {
+    font-size: 24px;
+}
+
+.download-row .download-info {
+    text-align: left;
+}
+
+.download-row .platform-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2d3748;
+    margin: 0;
+}
+
+.download-row .download-type {
+    font-size: 12px;
+    color: #718096;
+}
+
+.download-row .download-options {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.download-option {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: #f3f4f6;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4a5568;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.download-option.primary {
+    background-color: #55928e;
+    color: white;
+}
+
+.download-option:hover {
+    background-color: #c2a03f;
+    color: white;
+}
+
+.download-option.primary:hover {
+    background-color: #467a77;
+}
+
+.download-option .material-icons {
+    font-size: 16px;
+}
+
+.store-btn.cancel-btn {
+    background-color: #f3f4f6;
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.store-btn.cancel-btn:hover {
+    border-color: #c2a03f;
+    background: #fefcf3;
+    transform: translateY(-1px);
+}
+
+.store-btn .material-icons {
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .download-row {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+    }
+    
+    .download-row .download-options {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+}
