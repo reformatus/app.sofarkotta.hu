@@ -109,7 +109,9 @@ body {
     justify-content: center;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     min-height: 52px; /* Prevent height jumping */
-    white-space: nowrap; /* Prevent text wrapping that could cause jumps */
+    white-space: normal; /* Allow text wrapping */
+    text-align: center;
+    line-height: 1.3;
 }
 
 .btn-with-options {
@@ -118,6 +120,7 @@ body {
     min-width: 280px; /* Prevent width jumping on text changes */
     display: flex;
     align-items: stretch; /* Ensure equal height of children */
+    flex-wrap: nowrap; /* Prevent the button from wrapping itself */
 }
 
 .btn-main {
@@ -135,13 +138,17 @@ body {
     transition: opacity 0.2s ease; /* Smooth text changes */
     min-height: 52px; /* Match parent button height */
     overflow: hidden; /* Prevent text overflow */
+    white-space: normal; /* Allow text wrapping */
+    text-align: center;
+    line-height: 1.3;
 }
 
 #downloadText {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px; /* Maximum width for the text */
+    white-space: normal; /* Allow wrapping */
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none; /* Remove width restriction */
+    word-break: break-word; /* Break long words if necessary */
 }
 
 .btn-options {
@@ -270,6 +277,8 @@ body {
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .store-dialog.show {
@@ -284,6 +293,9 @@ body {
     width: 90%;
     text-align: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    margin: 20px;
 }
 
 .dialog-title {
@@ -447,5 +459,53 @@ body {
 
     .store-options {
         grid-template-columns: 1fr;
+    }
+
+    .btn {
+        padding: 16px 20px; /* Increase padding for better touch targets */
+        font-size: 15px;
+        min-height: auto; /* Allow height to grow with content */
+        height: auto;
+    }
+
+    .btn-with-options {
+        min-width: auto; /* Remove fixed width constraint */
+        width: 100%;
+        padding: 0; /* Ensure no padding on container */
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .btn-main {
+        padding: 16px 15px;
+        min-height: auto;
+        height: auto;
+        border-radius: 0; /* Remove border radius since container handles it */
+    }
+
+    .btn-options {
+        min-height: auto;
+        height: auto;
+        align-self: stretch; /* Match the height of btn-main */
+        padding: 16px 12px; /* Match the main button padding */
+        flex: 0 0 48px; /* Slightly wider for better touch target */
+        border-radius: 0; /* Remove border radius since container handles it */
+    }
+
+    .material-icons {
+        font-size: 18px; /* Slightly smaller icons on mobile */
+    }
+}
+
+/* Ensure proper scrolling on mobile */
+@media (max-height: 600px) {
+    .store-dialog {
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+    
+    .dialog-content {
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
     }
 }
