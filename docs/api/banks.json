@@ -1,6 +1,7 @@
 [
   {
     "name": "Sófár Kottatár",
-    "api": "https://sofarkotta.hu/api"
+    "api": "https://sofarkotta.hu/api",
+    "defaultEnabled": true
   }
 ]
