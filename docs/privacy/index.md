@@ -1,7 +1,7 @@
-# Sófár DalApp
+# Sófár Hangoló
 ## Adatkezelési tájékoztató
 
-A Sófár DalApp semmilyen adatot nem gyűjt, sem statisztikai, sem semmilyen egyéb célból.
+A Sófár Hangoló semmilyen adatot nem gyűjt, sem statisztikai, sem semmilyen egyéb célból.
 
 Ha az appot egy alkalmazásboltból telepítetted, akkor annak az adatkezelési gyakorlatát is vedd figyelembe.
 
@@ -14,7 +14,7 @@ A tájékoztatót bármikor megváltoztathatjuk, ebben az esetben alkalmazáson 
 
 ## Privacy Policy
 
-Sófár DalApp does not collect any data, neither for statistical purposes nor for any other purpose.
+Sófár Hangoló does not collect any data, neither for statistical purposes nor for any other purpose.
 
 If you installed the app from an app store, please also consider the data management practices of that platform.
 

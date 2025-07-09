@@ -1,4 +1,4 @@
-# Sófár DalApp Web
+# Sófár Hangoló Web
 
 Hamarosan...
 

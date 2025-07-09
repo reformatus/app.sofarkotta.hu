@@ -1,5 +1,5 @@
 /**
- * Main page script for Sófár DalApp
+ * Main page script for Sófár Hangoló
  * Uses the common download functionality
  */
 

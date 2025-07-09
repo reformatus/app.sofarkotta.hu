@@ -1,5 +1,5 @@
 /**
- * Shared configuration for Sófár DalApp platform availability and download options
+ * Shared configuration for Sófár Hangoló platform availability and download options
  * Used by both main page and launch page
  */
 
