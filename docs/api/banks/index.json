@@ -1,12 +1,12 @@
 [
   {
-    "name": "Sófár Kottatár",
-    "api": "https://sofarkotta.hu/api",
+    "name": "Csillagpont kották",
+    "api": "https://reflabs.hu/csillagpont-kottatar/api",
     "defaultEnabled": true
   },
   {
-    "name": "Csillagpont kották",
-    "api": "https://reflabs.hu/csillagpont-kottatar/api",
+    "name": "Sófár Kottatár",
+    "api": "https://sofarkotta.hu/api",
     "defaultEnabled": true
   }
 ]
