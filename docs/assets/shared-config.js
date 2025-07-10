@@ -9,9 +9,9 @@ const platformConfig = {
         name: 'Android',
         icon: 'android',
         store: {
-            url: '#', // Coming soon
+            url: 'https://play.google.com/store/apps/details?id=org.lyricapp.sofar',
             name: 'Google Play',
-            available: false
+            available: true
         },
         package: {
             url: 'https://github.com/reformatus/lyric/releases/latest',
@@ -28,13 +28,13 @@ const platformConfig = {
         name: 'iOS',
         icon: 'phone_iphone',
         store: {
-            url: '#', // Coming soon
+            url: 'https://apps.apple.com/us/app/s%C3%B3f%C3%A1r-hangol%C3%B3/id6738664835',
             name: 'App Store',
-            available: false
+            available: true
         },
         package: {
-            url: null, // iOS does not support direct package installation
-            name: null,
+            url: '#',
+            name: 'IPA',
             available: false
         },
         beta: {
