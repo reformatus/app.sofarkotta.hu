@@ -30,7 +30,7 @@ const platformConfig = {
         store: {
             url: 'https://apps.apple.com/us/app/s%C3%B3f%C3%A1r-hangol%C3%B3/id6738664835',
             name: 'App Store',
-            available: false
+            available: true
         },
         package: {
             url: '#',
