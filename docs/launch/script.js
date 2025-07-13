@@ -225,11 +225,12 @@ function setupButtonHandlers() {
     const webAppBtn = document.getElementById('webAppBtn');
     const openInAppBtn = document.getElementById('openInAppBtn');
     
-    webAppBtn.addEventListener('click', function() {
+    // TODO uncomment me when webapp ready
+    /*webAppBtn.addEventListener('click', function() {
         const params = window.launchParams || '';
         const webAppUrl = `https://app.sofarkotta.hu/web/${params}`;
         window.open(webAppUrl, '_blank');
-    });
+    });*/
     
     openInAppBtn.addEventListener('click', function() {
         const params = window.launchParams || '';
