@@ -12,8 +12,16 @@
             var search = window.location.search;
             var hash = window.location.hash;
             
+            // Recover deep links into the Flutter web app by redirecting back
+            // to the app entry point and letting the app restore the path.
+            if (path.startsWith('/web/') && path !== '/web/' && path !== '/web/index.html') {
+                sessionStorage.setItem('originalWebPath', path + search + hash);
+                window.location.replace(window.location.origin + '/web/');
+            } else if (path === '/web') {
+                window.location.replace(window.location.origin + '/web/');
+            }
             // Check if this is a launch path that's not already at the launch index
-            if (path.startsWith('/launch/') && path !== '/launch/' && path !== '/launch/index.html') {
+            else if (path.startsWith('/launch/') && path !== '/launch/' && path !== '/launch/index.html') {
                 // Store the original path in session storage so the launch page can access it
                 sessionStorage.setItem('originalPath', path + search + hash);
                 // Redirect to the launch page
