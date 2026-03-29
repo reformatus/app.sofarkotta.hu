@@ -164,6 +164,9 @@ function parseLinkAndUpdateUI() {
     
     // Store the launch parameters for button handlers
     window.launchParams = fullParams;
+    window.launchPath = launchPath;
+    window.launchSearch = search;
+    window.launchHash = hash;
     
     updateDescriptionForPath(launchPath, search);
 }
@@ -225,12 +228,9 @@ function setupButtonHandlers() {
     const webAppBtn = document.getElementById('webAppBtn');
     const openInAppBtn = document.getElementById('openInAppBtn');
     
-    // TODO uncomment me when webapp ready
-    /*webAppBtn.addEventListener('click', function() {
-        const params = window.launchParams || '';
-        const webAppUrl = `https://app.sofarkotta.hu/web/${params}`;
-        window.open(webAppUrl, '_blank');
-    });*/
+    webAppBtn.addEventListener('click', function() {
+        window.location.href = getWebAppUrl();
+    });
     
     openInAppBtn.addEventListener('click', function() {
         const params = window.launchParams || '';
@@ -242,4 +242,17 @@ function setupButtonHandlers() {
         // Fallback: if custom scheme doesn't work, could show a message
         // But since this is the last resort button, we'll just try the scheme
     });
+}
+
+function getWebAppUrl() {
+    const launchPath = window.launchPath || '';
+    const search = window.launchSearch || '';
+    const hash = window.launchHash || '';
+    const webPath = launchPath.startsWith('song/')
+        ? launchPath
+        : launchPath
+            ? `launch/${launchPath}`
+            : '';
+
+    return `${window.location.origin}/web/${webPath}${search}${hash}`;
 }
