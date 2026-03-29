@@ -229,7 +229,16 @@ function setupButtonHandlers() {
     const openInAppBtn = document.getElementById('openInAppBtn');
     
     webAppBtn.addEventListener('click', function() {
-        window.location.href = getWebAppUrl();
+        const webUrl = new URL(getWebAppUrl());
+        const webPath = `${webUrl.pathname}${webUrl.search}${webUrl.hash}`;
+
+        if (webUrl.origin === window.location.origin && webUrl.pathname.startsWith('/web/')) {
+            sessionStorage.setItem('originalWebPath', webPath);
+            window.location.href = `${window.location.origin}/web/`;
+            return;
+        }
+
+        window.location.href = webUrl.toString();
     });
     
     openInAppBtn.addEventListener('click', function() {
