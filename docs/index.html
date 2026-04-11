@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sófár Hangoló</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css">
     <link rel="stylesheet" href="assets/download-styles.css">
     <style>
         * {
@@ -155,7 +156,6 @@
         }
         
         .webapp-btn:hover {
-            transform: translateY(-3px);
             box-shadow: 0 6px 16px rgba(194, 160, 63, 0.4);
         }
 
@@ -167,7 +167,7 @@
             font-size: 22px;
             font-weight: 600;
             color: #2d3748;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
             margin-top: 0;
         }
         
@@ -175,13 +175,6 @@
             padding-top: 15vh;
         }
 
-        .downloads-description {
-            font-size: 15px;
-            color: #4a5568;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
         .app-info-column .column-content {
             text-align: left;
             display: flex;
@@ -248,7 +241,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transition: box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
         }
 
         .btn-primary {
@@ -258,7 +251,6 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(194, 160, 63, 0.4);
         }
 
@@ -507,8 +499,7 @@
                 font-size: 20px;
             }
 
-            .webapp-description,
-            .downloads-description {
+            .webapp-description {
                 font-size: 15px;
             }
         }
@@ -561,8 +552,7 @@
         <div class="column downloads-column">
             <div class="column-content">
                 <div class="downloads-section">
-                    <h2 class="section-title">App letöltése</h2>
-                    <p class="downloads-description">Telepítsd fel az eszközödre a teljes funkcionalitásért</p>
+                    <h2 class="section-title">Letöltés</h2>
                       <div class="downloads-container" id="downloads-container">
                         <!-- Platform download rows will be dynamically generated here -->
                     </div>
@@ -587,6 +577,8 @@
     </div>
     </div>
 
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="assets/shared-config.js"></script>
     <script src="assets/common.js"></script>
     <script src="assets/main.js"></script>
