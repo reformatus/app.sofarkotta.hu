@@ -2,75 +2,31 @@
 // Note: Using script tags in the HTML file to load shared-config.js and common.js before this file
 
 function updateDownloadButton() {
-    // Use the detectPlatform function from common.js
     const platformId = detectPlatform();
     const downloadBtn = document.getElementById('downloadBtn');
     const downloadText = document.getElementById('downloadText');
     const downloadLabel = document.getElementById('downloadLabel');
     const downloadBtnContainer = document.getElementById('downloadBtnContainer');
 
-    console.log("Detected platform for button:", platformId); // Debug message
-
     // Add smooth transition for text change
     downloadBtn.style.opacity = '0.7';
     
     setTimeout(() => {
         try {
-            // Check if we have a valid platform and if there's an available download option
-            if (platformId && platformConfig[platformId]) {
-                const platform = platformConfig[platformId];
-                console.log("Platform config:", platform);
-                
-                // Check download availability in this order: 1. Store, 2. Beta, 3. Package
-                if (platform.store.available) {
-                    // Official store is available
-                    downloadLabel.textContent = `${platform.name} alkalmazás letöltése`;
-                    downloadLabel.classList.add('visible');
-                    
-                    downloadText.innerHTML = `<strong>${platform.name} - ${platform.store.name}</strong>`;
-                    downloadBtn.href = platform.store.url;
-                    downloadBtn.onclick = null; // Remove click handler, use normal link behavior
-                    
-                    downloadBtnContainer.classList.add('platform-detected');
-                    downloadBtnContainer.classList.remove('beta-button');
-                } else if (platform.beta.available) {
-                    // Beta is available
-                    downloadLabel.textContent = `${platform.name} béta letöltése`;
-                    downloadLabel.classList.add('visible');
-                    
-                    downloadText.innerHTML = `<strong>${platform.name} - ${platform.beta.name} (Béta)</strong>`;
-                    downloadBtn.href = platform.beta.url;
-                    downloadBtn.onclick = null; // Remove click handler, use normal link behavior
-                    
-                    downloadBtnContainer.classList.add('platform-detected');
-                    downloadBtnContainer.classList.add('beta-button');
-                } else if (platform.package.available) {
-                    // Package download is available
-                    downloadLabel.textContent = `${platform.name} alkalmazás letöltése`;
-                    downloadLabel.classList.add('visible');
-                    
-                    downloadText.innerHTML = `<strong>${platform.name} - ${platform.package.name}</strong>`;
-                    downloadBtn.href = platform.package.url;
-                    downloadBtn.onclick = null; // Remove click handler, use normal link behavior
-                    
-                    downloadBtnContainer.classList.add('platform-detected');
-                    downloadBtnContainer.classList.remove('beta-button');
-                } else {
-                    // Nothing is available for this platform yet
-                    downloadLabel.classList.remove('visible');
-                    
-                    downloadBtn.href = '#';
-                    downloadText.textContent = `${platform.name} verzió hamarosan`;
-                    downloadBtn.onclick = function(e) {
-                        e.preventDefault();
-                        showStoreDialog();
-                    };
-                    
-                    downloadBtnContainer.classList.remove('platform-detected');
-                    downloadBtnContainer.classList.remove('beta-button');
-                }
+            const preferred = platformId ? getPreferredPlatformOption(platformId) : null;
+
+            if (platformId && preferred && preferred.emphasis !== 'none') {
+                const trackLabel = preferred.track.id === 'prerelease' ? 'előzetes' : 'stabil';
+                downloadLabel.textContent = `${preferred.track.title} · ${preferred.track.version}`;
+                downloadLabel.classList.add('visible');
+
+                downloadText.innerHTML = `<strong>${preferred.name}</strong><span class="button-subtext">${trackLabel}</span>`;
+                downloadBtn.href = preferred.url;
+                downloadBtn.onclick = null;
+
+                downloadBtnContainer.classList.add('platform-detected');
+                downloadBtnContainer.classList.toggle('beta-button', preferred.track.id === 'prerelease');
             } else {
-                // Handle unknown platform
                 downloadLabel.classList.remove('visible');
                 downloadBtn.href = '#';
                 downloadText.textContent = 'Alkalmazás letöltése';
@@ -84,7 +40,6 @@ function updateDownloadButton() {
             }
         } catch (error) {
             console.error("Error updating download button:", error);
-            // Fallback to default state
             downloadLabel.classList.remove('visible');
             downloadBtn.href = '#';
             downloadText.textContent = 'Alkalmazás letöltése';
@@ -120,8 +75,6 @@ document.getElementById('storeDialog').addEventListener('click', function(e) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Launch page initialized');
-    console.log('Platform detection debugging - Available platforms:', Object.keys(platformConfig).join(', '));
     updateDownloadButton();
     parseLinkAndUpdateUI();
     setupButtonHandlers();

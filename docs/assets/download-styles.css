@@ -3,6 +3,89 @@
  * Used by both main page and launch page
  */
 
+.track-toggle-block {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.track-toggle-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.track-toggle-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.track-release-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: #55928e;
+    text-decoration: none;
+}
+
+.track-release-link:hover {
+    color: #467a77;
+    text-decoration: underline;
+}
+
+.track-toggle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.track-card {
+    display: grid;
+    gap: 6px;
+    text-align: left;
+    border-radius: 14px;
+    border: 1px solid #d6dde5;
+    background: #fff;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.track-card.selected {
+    border-color: #55928e;
+    box-shadow: 0 0 0 2px rgba(85, 146, 142, 0.16);
+    background: #f4fbfa;
+}
+
+.track-card.disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.track-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.track-card-description {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #607081;
+}
+
+.track-card-version {
+    font-size: 12px;
+    font-weight: 700;
+    color: #55928e;
+}
+
+.download-rows {
+    display: grid;
+    gap: 10px;
+}
+
 /* Download rows (table layout) */
 .download-row {
     display: grid;
@@ -75,8 +158,8 @@
 }
 
 .download-option {
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 10px 12px;
+    border-radius: 10px;
     background-color: #f3f4f6;
     font-size: 13px;
     font-weight: 500;
@@ -88,9 +171,9 @@
     align-items: center;
     gap: 4px;
     text-align: left;
-    min-height: 32px;
-    word-break: keep-all;
-    white-space: nowrap;
+    min-height: 44px;
+    text-decoration: none;
+    max-width: 100%;
 }
 
 .download-option.primary {
@@ -118,6 +201,49 @@
 
 .download-option .material-icons {
     font-size: 16px;
+    flex: 0 0 auto;
+}
+
+.download-option-copy {
+    display: grid;
+    gap: 4px;
+}
+
+.download-option-title {
+    display: block;
+    white-space: nowrap;
+}
+
+.download-option-subtitle {
+    display: block;
+    font-size: 11px;
+    opacity: 0.82;
+}
+
+.download-option-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.download-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.65);
+    color: inherit;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.download-empty-state {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #475569;
 }
 
 .store-btn.cancel-btn {
@@ -206,6 +332,15 @@
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
+    .track-toggle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .track-toggle-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
     .download-row {
         grid-template-columns: auto 1fr;
         grid-template-rows: auto auto;

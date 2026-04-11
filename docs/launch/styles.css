@@ -96,6 +96,14 @@ body {
     opacity: 1;
 }
 
+.button-subtext {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.82;
+}
+
 .btn {
     padding: 14px 24px;
     border: none;
