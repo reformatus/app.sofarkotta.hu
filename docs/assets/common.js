@@ -1,158 +1,251 @@
-/**
- * Common functionality shared between main page and launch page
- * for displaying platform-specific download options
- */
+let selectedDownloadTrack = 'stable';
 
-// Platform detection based on user agent
+function getDownloadConfig() {
+  return window.sofarSharedConfig?.downloads ?? { tracks: {} };
+}
+
+function getTracks() {
+  const downloads = getDownloadConfig();
+  const stable = downloads.tracks?.stable ?? null;
+  const prerelease = downloads.tracks?.prerelease ?? null;
+  return { stable, prerelease };
+}
+
+function getAvailableTrack(trackId) {
+  const { stable, prerelease } = getTracks();
+  if (!stable && prerelease) {
+    return prerelease;
+  }
+  if (trackId === 'prerelease' && prerelease) {
+    return prerelease;
+  }
+  return stable;
+}
+
+function setSelectedDownloadTrack(trackId) {
+  selectedDownloadTrack = getAvailableTrack(trackId)?.id ?? 'stable';
+}
+
 function detectPlatform() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const platform = navigator.platform.toLowerCase();
-    
-    console.log('User Agent:', userAgent);
-    console.log('Platform:', platform);
-    console.log('Touch Points:', navigator.maxTouchPoints);
+  const userAgent = navigator.userAgent.toLowerCase();
+  const platform = navigator.platform.toLowerCase();
 
-    try {
-        // iOS detection - includes iPad on newer iOS that reports as MacOS
-        if (/iphone|ipad|ipod/.test(userAgent) || 
-            (/safari/.test(userAgent) && /apple computer/.test(userAgent) && navigator.maxTouchPoints > 1)) {
-            console.log('Detected: iOS');
-            return 'ios';
-        }
-
-        // Android detection
-        if (/android/.test(userAgent)) {
-            console.log('Detected: Android');
-            return 'android';
-        }
-
-        // macOS detection (desktop)
-        if ((/mac/.test(platform) || /apple computer/.test(userAgent)) && 
-            !(/iphone|ipad|ipod/.test(userAgent)) && 
-            (navigator.maxTouchPoints === 0 || navigator.maxTouchPoints === undefined)) {
-            console.log('Detected: macOS');
-            return 'macos';
-        }
-
-        // Windows detection - enhanced to catch more Windows variants
-        if (/win/.test(platform) || /windows nt/.test(userAgent) || /windows/.test(userAgent)) {
-            console.log('Detected: Windows');
-            return 'windows';
-        }
-
-        // Linux detection
-        if (/linux/.test(platform) || /linux/.test(userAgent)) {
-            console.log('Detected: Linux');
-            return 'linux';
-        }
-    } catch (error) {
-        console.error('Error during platform detection:', error);
+  try {
+    if (
+      /iphone|ipad|ipod/.test(userAgent) ||
+      (/safari/.test(userAgent) &&
+        /apple computer/.test(userAgent) &&
+        navigator.maxTouchPoints > 1)
+    ) {
+      return 'ios';
     }
-
-    // Fallback to simple OS checks if the above failed
-    if (navigator.userAgent.indexOf('Windows') !== -1) return 'windows';
-    if (navigator.userAgent.indexOf('Mac') !== -1) return 'macos';
-    if (navigator.userAgent.indexOf('Linux') !== -1) return 'linux';
-    if (navigator.userAgent.indexOf('Android') !== -1) return 'android';
-    if (navigator.userAgent.indexOf('iPhone') !== -1 || 
-        navigator.userAgent.indexOf('iPad') !== -1 || 
-        navigator.userAgent.indexOf('iPod') !== -1) return 'ios';
-
-    // Final check for Windows using CSSStyleDeclaration.getPropertyValue if available
-    try {
-        if (typeof getComputedStyle === 'function' && 
-            getComputedStyle(document.documentElement).getPropertyValue('--ms-overflow-style') !== '') {
-            console.log('Detected: Windows (via CSS property check)');
-            return 'windows';
-        }
-    } catch (error) {
-        console.error('Error during CSS property check:', error);
+    if (/android/.test(userAgent)) {
+      return 'android';
     }
+    if (
+      (/mac/.test(platform) || /apple computer/.test(userAgent)) &&
+      !/iphone|ipad|ipod/.test(userAgent) &&
+      (navigator.maxTouchPoints === 0 || navigator.maxTouchPoints === undefined)
+    ) {
+      return 'macos';
+    }
+    if (/win/.test(platform) || /windows nt/.test(userAgent) || /windows/.test(userAgent)) {
+      return 'windows';
+    }
+    if (/linux/.test(platform) || /linux/.test(userAgent)) {
+      return 'linux';
+    }
+  } catch (error) {
+    console.error('Error during platform detection:', error);
+  }
 
-    // Unknown platform
-    console.log('Detected: Unknown platform');
-    return null;
+  return null;
 }
 
-// Generate download rows for platforms in the container element
-function generateDownloadRows(containerId, includeCancel = false) {
-    const containerElement = document.getElementById(containerId);
-    if (!containerElement) return;
-    
-    // Clear existing content
-    containerElement.innerHTML = '';
-      // Add platform options
-    Object.keys(platformConfig).forEach(platformId => {
-        const platform = platformConfig[platformId];
-        
-        // Check any download option is available
-        const hasAnyDownload = platform.store.available || 
-                              platform.package.available || 
-                              platform.beta.available;
-        
-        // Create download row for each platform
-        const downloadRow = document.createElement('div');
-        downloadRow.className = 'download-row';
-        if (!hasAnyDownload) {
-            downloadRow.classList.add('disabled');
-        }
-          // Platform icon and info
-        downloadRow.innerHTML = `
-            <div class="platform-icon">
-                <span class="material-icons">${platform.icon}</span>
-            </div>
-            <div class="download-info">
-                <div class="platform-name">${platform.name}</div>
-                ${!hasAnyDownload ? '<div class="download-type">Hamarosan</div>' : ''}
-            </div>            <div class="download-options">
-                ${platform.store.available ? 
-                    `<button class="download-option primary" onclick="downloadFromStore('${platformId}', 'store')">
-                        <span class="material-icons">download</span>${platform.store.name}
-                    </button>` : ''}
-                ${platform.package.available && platform.package.url ? 
-                    `<button class="download-option" onclick="downloadFromStore('${platformId}', 'package')">
-                        <span class="material-icons">download</span>${platform.package.name}
-                    </button>` : ''}
-                ${platform.beta.available ? 
-                    `<button class="download-option beta" onclick="downloadFromStore('${platformId}', 'beta')">
-                        <span class="material-icons">science</span>${platform.beta.name}
-                    </button>` : ''}
-            </div>
-        `;
-        
-        containerElement.appendChild(downloadRow);
+function createTrackToggleMarkup() {
+  const { stable, prerelease } = getTracks();
+  const currentTrack = getAvailableTrack(selectedDownloadTrack);
+  if (!currentTrack) {
+    return '';
+  }
+  const cardModels = [
+    stable
+      ? stable
+      : {
+          id: 'stable',
+          title: 'Stabil kiadás',
+          description: 'Jelenleg nincs nyilvános stabil kiadás.',
+          version: 'Nincs aktív stabil kiadás',
+          releaseUrl: currentTrack.releaseUrl,
+          disabled: true,
+        },
+    prerelease
+      ? prerelease
+      : {
+          id: 'prerelease',
+          title: 'Előzetes kiadás',
+          description: 'Új funkciók hamarabb, kisebb stabilitással.',
+          version: 'Nincs aktív előzetes teszt',
+          releaseUrl: currentTrack.releaseUrl,
+          disabled: true,
+        },
+  ];
+  const cards = cardModels
+    .map((track) => {
+      const disabled = track.disabled === true;
+      const selected = track.id === selectedDownloadTrack;
+      return `
+        <button
+          type="button"
+          class="track-card${selected ? ' selected' : ''}${disabled ? ' disabled' : ''}"
+          data-track-id="${track.id}"
+          ${disabled ? 'disabled' : ''}
+        >
+          <span class="track-card-title">${track.title}</span>
+          <span class="track-card-description">${track.description}</span>
+          <span class="track-card-version">${track.version}</span>
+        </button>
+      `;
+    })
+    .join('');
+
+  return `
+    <div class="track-toggle-block">
+      <div class="track-toggle-header">
+        <span class="track-toggle-title">Kiadási csatorna</span>
+        <a class="track-release-link" href="${currentTrack.releaseUrl}" target="_blank" rel="noreferrer">Kiadási oldal</a>
+      </div>
+      <div class="track-toggle-grid">${cards}</div>
+    </div>
+  `;
+}
+
+function formatEmptyState() {
+  return `
+    <div class="download-empty-state">
+      Ehhez a csatornához most nincs elérhető letöltés.
+    </div>
+  `;
+}
+
+function buildPlatformRows(track) {
+  return Object.entries(track.platforms)
+    .map(([platformId, platform]) => {
+      const storeOptions = platform.storeOptions ?? [];
+      const downloadOptions = platform.downloadOptions ?? [];
+      const hasAnyOption = storeOptions.length > 0 || downloadOptions.length > 0;
+
+      const optionMarkup = [
+        ...storeOptions.map(
+          (option) => `
+            <a class="download-option primary" href="${option.url}" target="_blank" rel="noreferrer">
+              <span class="material-icons">storefront</span>
+              <span class="download-option-copy">
+                <span class="download-option-title">${option.name}</span>
+                <span class="download-option-subtitle">Áruház</span>
+              </span>
+            </a>
+          `,
+        ),
+        ...downloadOptions.map(
+          (option) => `
+            <a class="download-option" href="${option.url}" target="_blank" rel="noreferrer">
+              <span class="material-icons">download</span>
+              <span class="download-option-copy">
+                <span class="download-option-title">${option.name}</span>
+                <span class="download-option-tags">
+                  ${option.statsLabel ? `<span class="download-tag">${option.statsLabel}</span>` : ''}
+                  ${option.sizeLabel ? `<span class="download-tag">${option.sizeLabel}</span>` : ''}
+                </span>
+              </span>
+            </a>
+          `,
+        ),
+      ].join('');
+
+      return `
+        <div class="download-row${hasAnyOption ? '' : ' disabled'}">
+          <div class="platform-icon">
+            <span class="material-icons">${platform.icon}</span>
+          </div>
+          <div class="download-info">
+            <div class="platform-name">${platform.name}</div>
+            <div class="download-type">${
+              hasAnyOption ? `Legfrissebb ${track.version}` : 'Hamarosan'
+            }</div>
+          </div>
+          <div class="download-options">${hasAnyOption ? optionMarkup : ''}</div>
+        </div>
+      `;
+    })
+    .join('');
+}
+
+function renderDownloadPanel(containerId, includeCancel = false) {
+  const containerElement = document.getElementById(containerId);
+  if (!containerElement) {
+    return;
+  }
+
+  const track = getAvailableTrack(selectedDownloadTrack);
+  const rows = track ? buildPlatformRows(track) : formatEmptyState();
+
+  containerElement.innerHTML = `
+    ${createTrackToggleMarkup()}
+    <div class="download-rows">${rows || formatEmptyState()}</div>
+    ${
+      includeCancel
+        ? `
+      <button class="store-btn cancel-btn" type="button" onclick="closeDialog()">
+        <span class="material-icons">close</span>Mégse
+      </button>
+    `
+        : ''
+    }
+  `;
+
+  containerElement.querySelectorAll('[data-track-id]').forEach((button) => {
+    button.addEventListener('click', () => {
+      setSelectedDownloadTrack(button.getAttribute('data-track-id'));
+      renderDownloadPanel(containerId, includeCancel);
+      if (typeof updateDownloadButton === 'function') {
+        updateDownloadButton();
+      }
     });
-    
-    // Add cancel button if requested (for dialogs)
-    if (includeCancel) {
-        const cancelBtn = document.createElement('button');
-        cancelBtn.className = 'store-btn cancel-btn';
-        cancelBtn.onclick = function() {
-            if (typeof closeDialog === 'function') {
-                closeDialog();
-            }
-        };
-        cancelBtn.innerHTML = '<span class="material-icons">close</span>Mégse';
-        containerElement.appendChild(cancelBtn);
-    }
+  });
 }
 
-// Handle the download button click for a specific platform
-function downloadFromStore(platformId, type = 'store') {
-    const platform = platformConfig[platformId];
-    
-    if (type === 'store' && platform.store.available) {
-        window.open(platform.store.url, '_blank');
-    } else if (type === 'package' && platform.package.available) {
-        window.open(platform.package.url, '_blank');
-    } else if (type === 'beta' && platform.beta.available) {
-        window.open(platform.beta.url, '_blank');
-    } else {
-        alert('Ez a verzió még nem érhető el. Hamarosan!');
-    }
-    
-    // Close dialog if it exists and is open
-    if (typeof closeDialog === 'function') {
-        closeDialog();
-    }
+function generateDownloadRows(containerId, includeCancel = false) {
+  const downloads = getDownloadConfig();
+  setSelectedDownloadTrack(downloads.defaultTrack ?? 'stable');
+  renderDownloadPanel(containerId, includeCancel);
+}
+
+function getPreferredPlatformOption(platformId) {
+  const track = getAvailableTrack(selectedDownloadTrack);
+  const platform = track?.platforms?.[platformId];
+  if (!platform) {
+    return null;
+  }
+
+  const storeOption = (platform.storeOptions ?? [])[0];
+  if (storeOption) {
+    return { ...storeOption, emphasis: 'store', track };
+  }
+
+  const downloadOption = (platform.downloadOptions ?? [])[0];
+  if (downloadOption) {
+    return { ...downloadOption, emphasis: 'download', track };
+  }
+
+  return { emphasis: 'none', track };
+}
+
+function showStoreDialog() {
+  renderDownloadPanel('dialogDownloadOptions', true);
+  document.getElementById('storeDialog').classList.add('show');
+}
+
+function closeDialog() {
+  document.getElementById('storeDialog').classList.remove('show');
 }

@@ -4,6 +4,5 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Generate the download rows for the main page
     generateDownloadRows('downloads-container');
 });
