@@ -124,9 +124,17 @@ function formatEmptyState() {
 function createDownloadPopoverContent(option) {
   return `
     <div class="download-popover-content">
-      <div><strong>Fájl:</strong> ${escapeHtml(option.fileName ?? option.name ?? '')}</div>
-      <div><strong>Méret:</strong> ${escapeHtml(option.sizeLabel ?? 'Ismeretlen')}</div>
-      <div><strong>Letöltés:</strong> ${escapeHtml(option.downloadCountLabel ?? '0 letöltés')}</div>
+      <div class="download-popover-file">${escapeHtml(option.fileName ?? option.name ?? '')}</div>
+      <div class="download-popover-meta">
+        <span class="download-popover-chip">
+          <span class="material-icons">download</span>
+          <span>${escapeHtml(String(option.downloadCount ?? 0))}</span>
+        </span>
+        <span class="download-popover-chip">
+          <span class="material-icons">description</span>
+          <span>${escapeHtml(option.sizeLabel ?? 'Ismeretlen')}</span>
+        </span>
+      </div>
     </div>
   `;
 }
