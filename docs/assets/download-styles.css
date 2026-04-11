@@ -3,82 +3,96 @@
  * Used by both main page and launch page
  */
 
-.track-toggle-block {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 18px;
+.download-track-shell {
+    border: 1px solid #b9c0c9;
+    border-radius: 22px;
+    background: #ffffff;
+    overflow: hidden;
 }
 
-.track-toggle-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.track-toggle-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.track-release-link {
-    font-size: 13px;
-    font-weight: 500;
-    color: #55928e;
-    text-decoration: none;
-}
-
-.track-release-link:hover {
-    color: #467a77;
-    text-decoration: underline;
-}
-
-.track-toggle-grid {
+.download-track-tabs {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    border-bottom: 1px solid #b9c0c9;
 }
 
-.track-card {
+.track-tab {
     display: grid;
-    gap: 6px;
-    text-align: left;
-    border-radius: 14px;
-    border: 1px solid #d6dde5;
-    background: #fff;
-    padding: 14px;
-    cursor: pointer;
-    transition: all 0.18s ease;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    min-height: 76px;
+    padding: 0 22px;
+    background: #f8f6f2;
 }
 
-.track-card.selected {
-    border-color: #55928e;
-    box-shadow: 0 0 0 2px rgba(85, 146, 142, 0.16);
-    background: #f4fbfa;
+.track-tab + .track-tab {
+    border-left: 1px solid #b9c0c9;
 }
 
-.track-card.disabled {
+.track-tab.selected {
+    background: #fec89a;
+    border-bottom: 1px solid transparent;
+    box-shadow: inset 0 -1px 0 #ffffff;
+}
+
+.track-tab.disabled {
     opacity: 0.55;
+}
+
+.track-tab-select {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+.track-tab-select:disabled,
+.track-info-button:disabled {
     cursor: not-allowed;
 }
 
-.track-card-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1f2937;
+.track-tab-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #111827;
 }
 
-.track-card-description {
-    font-size: 13px;
-    line-height: 1.45;
-    color: #607081;
+.track-tab-version {
+    font-size: 18px;
+    font-weight: 500;
+    color: #111827;
+    justify-self: end;
 }
 
-.track-card-version {
-    font-size: 12px;
-    font-weight: 700;
-    color: #55928e;
+.track-info-button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.track-info-button .material-icons {
+    font-size: 18px;
+}
+
+.download-track-content {
+    padding: 22px;
+    background: #ffffff;
 }
 
 .download-rows {
@@ -86,25 +100,15 @@
     gap: 10px;
 }
 
-/* Download rows (table layout) */
 .download-row {
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 16px;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 14px;
     border: 1px solid #e5e7eb;
-    margin-bottom: 8px;
-    background-color: white;
-    transition: all 0.2s ease;
+    background-color: #ffffff;
     align-items: center;
-    cursor: default;
-}
-
-.download-row:hover:not(.disabled) {
-    background-color: #f9fafb;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .download-row.disabled {
@@ -113,13 +117,13 @@
 }
 
 .download-row .platform-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #edf2f7;
-    border-radius: 8px;
+    border-radius: 12px;
     color: #4a5568;
 }
 
@@ -145,11 +149,6 @@
     margin: 0;
 }
 
-.download-row .download-type {
-    font-size: 12px;
-    color: #718096;
-}
-
 .download-row .download-options {
     display: flex;
     flex-wrap: wrap;
@@ -158,45 +157,23 @@
 }
 
 .download-option {
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
     background-color: #f3f4f6;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     color: #4a5568;
     border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
-    text-align: left;
-    min-height: 44px;
+    gap: 6px;
     text-decoration: none;
-    max-width: 100%;
+    min-height: 44px;
 }
 
 .download-option.primary {
     background-color: #55928e;
-    color: white;
-}
-
-.download-option.beta {
-    background-color: #f59e0b;
-    color: white;
-}
-
-.download-option:hover {
-    background-color: #c2a03f;
-    color: white;
-}
-
-.download-option.primary:hover {
-    background-color: #467a77;
-}
-
-.download-option.beta:hover {
-    background-color: #d97706;
+    color: #ffffff;
 }
 
 .download-option .material-icons {
@@ -204,38 +181,9 @@
     flex: 0 0 auto;
 }
 
-.download-option-copy {
-    display: grid;
-    gap: 4px;
-}
-
 .download-option-title {
     display: block;
     white-space: nowrap;
-}
-
-.download-option-subtitle {
-    display: block;
-    font-size: 11px;
-    opacity: 0.82;
-}
-
-.download-option-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.download-tag {
-    display: inline-flex;
-    align-items: center;
-    min-height: 22px;
-    padding: 0 8px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.65);
-    color: inherit;
-    font-size: 11px;
-    font-weight: 600;
 }
 
 .download-empty-state {
@@ -254,7 +202,6 @@
     border: 2px solid #e2e8f0;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.15s ease;
     font-size: 14px;
     font-weight: 500;
     color: #2d3748;
@@ -263,7 +210,6 @@
 .store-btn.cancel-btn:hover {
     border-color: #c2a03f;
     background: #fefcf3;
-    transform: translateY(-1px);
 }
 
 .store-btn .material-icons {
@@ -271,91 +217,157 @@
     margin-right: 6px;
 }
 
-/* Platform cards (used on main page) */
-.platform-card {
-    background: #f9fafb;
-    border-radius: 12px;
-    padding: 20px;
+.release-details-dialog {
+    border: none;
+    padding: 0;
+    border-radius: 18px;
+    width: min(680px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22);
+}
+
+.release-details-dialog::backdrop {
+    background: rgba(15, 23, 42, 0.36);
+}
+
+.release-details-panel {
+    padding: 22px 24px 24px;
+    background: #ffffff;
+    color: #1f2937;
+}
+
+.release-details-close-row {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: default;
-}
-
-.platform-card:hover:not(.disabled) {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-.platform-card.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.platform-card .platform-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #edf2f7;
-    border-radius: 12px;
-    color: #4a5568;
-}
-
-.platform-card .platform-icon .material-icons {
-    font-size: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    line-height: 1;
-    margin: 0;
-}
-
-.platform-card .platform-name {
-    font-size: 18px;
-    font-weight: 500;
+    justify-content: flex-end;
     margin-bottom: 8px;
-    color: #2d3748;
 }
 
-.platform-card .platform-status {
+.release-details-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 999px;
+    color: #4b5563;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.release-details-track {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9a5e2f;
+    margin-bottom: 8px;
+}
+
+.release-details-title {
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 0 0 6px 0;
+}
+
+.release-details-tag {
     font-size: 14px;
-    color: #718096;
-    margin-bottom: 16px;
-    font-style: italic;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 18px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-    .track-toggle-grid {
+.release-details-body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #374151;
+    max-height: 45vh;
+    overflow: auto;
+}
+
+.release-details-body h1,
+.release-details-body h2,
+.release-details-body h3,
+.release-details-body h4 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.release-details-body p,
+.release-details-body ul,
+.release-details-body ol {
+    margin: 0 0 12px 0;
+}
+
+.release-details-link {
+    display: inline-flex;
+    margin-top: 18px;
+    color: #55928e;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.download-popover-content {
+    display: grid;
+    gap: 6px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.tippy-box[data-theme~='light-border'] {
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    color: #1f2937;
+}
+
+.tippy-box[data-theme~='light-border'] .tippy-content {
+    padding: 10px 12px;
+}
+
+@media (max-width: 640px) {
+    .download-track-tabs {
         grid-template-columns: 1fr;
     }
 
-    .track-toggle-header {
-        align-items: flex-start;
-        flex-direction: column;
+    .track-tab + .track-tab {
+        border-left: none;
+        border-top: 1px solid #b9c0c9;
+    }
+
+    .track-tab {
+        padding: 14px 18px;
+        min-height: 64px;
+    }
+
+    .track-tab-title,
+    .track-tab-version {
+        font-size: 16px;
+    }
+
+    .download-track-content {
+        padding: 16px;
     }
 
     .download-row {
         grid-template-columns: auto 1fr;
         grid-template-rows: auto auto;
     }
-    
+
     .download-row .download-options {
         grid-column: 1 / -1;
         justify-content: flex-start;
         margin-top: 8px;
-        flex-direction: column;
-        align-items: flex-start;
         width: 100%;
     }
-    
+
     .download-option {
         width: 100%;
+        justify-content: center;
+    }
+
+    .release-details-title {
+        font-size: 24px;
     }
 }

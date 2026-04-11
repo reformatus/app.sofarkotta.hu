@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sófár Hangoló - Indítás</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../assets/download-styles.css">
 </head>
@@ -22,7 +23,7 @@
         <p class="description" id="linkDescription"></p>
         <div class="button-container">
             <div class="download-section">
-                <label class="download-label" id="downloadLabel">Alkalmazás letöltése</label>
+                <label class="download-label">Alkalmazás letöltése</label>
                 <div class="btn btn-primary btn-with-options" id="downloadBtnContainer">
                     <a href="#" class="btn-main" id="downloadBtn">
                         <span class="material-icons">download</span>
@@ -49,8 +50,7 @@
     </div> <!-- Store selection dialog -->
     <div class="store-dialog" id="storeDialog">
         <div class="dialog-content">
-            <h2 class="dialog-title">Válassz platformot</h2>
-            <p class="dialog-subtitle">Melyik eszközre szeretnéd letölteni az alkalmazást?</p>
+            <h2 class="dialog-title">Letöltés</h2>
             <div class="store-options" id="dialogDownloadOptions">
                 <!-- Download options will be dynamically generated here -->
                 <button class="store-btn cancel-btn" onclick="closeDialog()">
@@ -61,6 +61,8 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="../assets/shared-config.js"></script>
     <script src="../assets/common.js"></script>
     <script src="script.js"></script>

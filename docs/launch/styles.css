@@ -54,11 +54,6 @@ body {
 
 .app-icon-link {
     display: inline-block;
-    transition: transform 0.15s ease;
-}
-
-.app-icon-link:hover {
-    transform: scale(1.05);
 }
 
 .description {
@@ -88,20 +83,6 @@ body {
     color: #4a5568;
     margin-bottom: 8px;
     font-weight: 500;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.download-label.visible {
-    opacity: 1;
-}
-
-.button-subtext {
-    display: block;
-    margin-top: 2px;
-    font-size: 12px;
-    font-weight: 500;
-    opacity: 0.82;
 }
 
 .btn {
@@ -115,7 +96,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
     min-height: 52px; /* Prevent height jumping */
     white-space: normal; /* Allow text wrapping */
     text-align: center;
@@ -193,7 +174,6 @@ body {
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(194, 160, 63, 0.4);
 }
 
@@ -247,7 +227,6 @@ body {
 }
 
 .btn-secondary:hover {
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(85, 146, 142, 0.4);
 }
 
@@ -259,7 +238,6 @@ body {
 }
 
 .btn-tertiary:hover {
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-color: #c2a03f;
 }
@@ -313,104 +291,11 @@ body {
     margin-bottom: 16px;
 }
 
-.dialog-subtitle {
-    font-size: 14px;
-    color: #4a5568;
-    margin-bottom: 24px;
-}
-
 .store-options {
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-top: 16px;
-}
-
-.download-row {
-    display: grid;
-    grid-template-columns: 40px auto 1fr;
-    gap: 12px;
-    align-items: center;
-    padding: 16px;
-    border-radius: 8px;
-    background-color: white;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-/* Launch page specific download row styles */
-.store-dialog .download-row {
-    margin-bottom: 12px;
-    /* Use the shared styles from download-styles.css for other properties */
-}
-
-/* No need to override more styles since we're using the shared CSS */
-
-.download-row .platform-icon .material-icons {
-    font-size: 24px;
-    color: #4a5568;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    line-height: 1;
-    margin: 0;
-}
-
-.download-row .download-info {
-    text-align: left;
-}
-
-.download-row .platform-name {
-    font-weight: 600;
-    color: #2d3748;
-    margin: 0;
-}
-
-.download-row .download-type {
-    font-size: 12px;
-    color: #718096;
-}
-
-.download-row .download-options {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-}
-
-.download-option {
-    padding: 6px 12px;
-    border-radius: 6px;
-    background-color: #f3f4f6;
-    font-size: 13px;
-    font-weight: 500;
-    color: #4a5568;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.download-option.primary {
-    background-color: #55928e;
-    color: white;
-}
-
-.download-option:hover {
-    background-color: #c2a03f;
-    color: white;
-}
-
-.download-option.primary:hover {
-    background-color: #467a77;
-}
-
-.download-option .material-icons {
-    font-size: 16px;
 }
 
 .store-btn {
@@ -443,7 +328,6 @@ body {
 .store-btn:hover {
     border-color: #c2a03f;
     background: #fefcf3;
-    transform: translateY(-1px);
 }
 
 .store-btn .material-icons {

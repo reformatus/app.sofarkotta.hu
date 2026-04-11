@@ -5,7 +5,6 @@ function updateDownloadButton() {
     const platformId = detectPlatform();
     const downloadBtn = document.getElementById('downloadBtn');
     const downloadText = document.getElementById('downloadText');
-    const downloadLabel = document.getElementById('downloadLabel');
     const downloadBtnContainer = document.getElementById('downloadBtnContainer');
 
     // Add smooth transition for text change
@@ -16,18 +15,13 @@ function updateDownloadButton() {
             const preferred = platformId ? getPreferredPlatformOption(platformId) : null;
 
             if (platformId && preferred && preferred.emphasis !== 'none') {
-                const trackLabel = preferred.track.id === 'prerelease' ? 'előzetes' : 'stabil';
-                downloadLabel.textContent = `${preferred.track.title} · ${preferred.track.version}`;
-                downloadLabel.classList.add('visible');
-
-                downloadText.innerHTML = `<strong>${preferred.name}</strong><span class="button-subtext">${trackLabel}</span>`;
+                downloadText.textContent = preferred.name;
                 downloadBtn.href = preferred.url;
                 downloadBtn.onclick = null;
 
                 downloadBtnContainer.classList.add('platform-detected');
                 downloadBtnContainer.classList.toggle('beta-button', preferred.track.id === 'prerelease');
             } else {
-                downloadLabel.classList.remove('visible');
                 downloadBtn.href = '#';
                 downloadText.textContent = 'Alkalmazás letöltése';
                 downloadBtn.onclick = function(e) {
@@ -40,7 +34,6 @@ function updateDownloadButton() {
             }
         } catch (error) {
             console.error("Error updating download button:", error);
-            downloadLabel.classList.remove('visible');
             downloadBtn.href = '#';
             downloadText.textContent = 'Alkalmazás letöltése';
             downloadBtn.onclick = function(e) {
@@ -54,16 +47,6 @@ function updateDownloadButton() {
           // Restore opacity
         downloadBtn.style.opacity = '1';
     }, 100);
-}
-
-function showStoreDialog() {
-    // Populate download options before showing the dialog
-    generateDownloadRows('dialogDownloadOptions', true);
-    document.getElementById('storeDialog').classList.add('show');
-}
-
-function closeDialog() {
-    document.getElementById('storeDialog').classList.remove('show');
 }
 
 // Close dialog when clicking outside
