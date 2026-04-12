@@ -24,11 +24,7 @@
         
         /* Two-column layout */
         .layout-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
             width: 100%;
-            height: 100vh;
             margin: 0;
             animation: fadeIn 0.5s ease-out;
         }
@@ -44,8 +40,6 @@
             box-shadow: none;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow: hidden;
             position: relative;
         }
         
@@ -54,6 +48,51 @@
             padding: 32px 28px;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (min-width: 1025px) {
+            .layout-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+                height: 100vh;
+            }
+
+            .column {
+                min-height: 0;
+                height: 100vh;
+                overflow-x: hidden;
+                overflow-y: auto;
+                scrollbar-gutter: stable;
+            }
+
+            .column-content {
+                flex: 0 0 auto;
+                min-height: auto;
+            }
+
+            .column-footer {
+                margin-top: 0;
+                flex: 0 0 auto;
+            }
+
+            .app-info-column .column-content {
+                flex: 1 0 auto;
+                min-height: 0;
+            }
+
+            .app-info-column .column-footer {
+                margin-top: auto;
+            }
+
+            .app-info-column.is-scrollable .column-content {
+                flex: 0 0 auto;
+                min-height: auto;
+            }
+
+            .app-info-column.is-scrollable .column-footer {
+                margin-top: 56px;
+            }
         }
         
         .downloads-column .column-content {
@@ -156,7 +195,7 @@
         }
         
         .webapp-btn:hover {
-            box-shadow: 0 6px 16px rgba(194, 160, 63, 0.4);
+            background: linear-gradient(135deg, #b59232 0%, #9b7f28 100%);
         }
 
         .downloads-section {
@@ -247,11 +286,10 @@
         .btn-primary {
             background-color: #c2a03f;
             color: white;
-            box-shadow: 0 2px 8px rgba(194, 160, 63, 0.3);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 4px 12px rgba(194, 160, 63, 0.4);
+            background-color: #b18f2f;
         }
 
         .btn-secondary {
@@ -261,6 +299,7 @@
         }
 
         .btn-secondary:hover {
+            background-color: #f8fafc;
             border-color: #c2a03f;
             color: #c2a03f;
         }
@@ -521,7 +560,7 @@
                             <span class="material-icons">language</span>
                         </div>
                         <div class="webapp-text">
-                            <h2 class="section-title">Webes alkalmazás</h2>
+                            <h2 class="section-title">Webapp</h2>
                             <p class="webapp-description">Böngészőben azonnal használható, telepítés nélkül</p>
                         </div>
                     </div>
@@ -581,6 +620,31 @@
     <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="assets/shared-config.js"></script>
     <script src="assets/common.js"></script>
+    <script>
+        (() => {
+            const desktopQuery = window.matchMedia('(min-width: 1025px)');
+            const syncAppInfoScrollState = () => {
+                const column = document.querySelector('.app-info-column');
+                if (!column) return;
+                if (!desktopQuery.matches) {
+                    column.classList.remove('is-scrollable');
+                    return;
+                }
+                const isScrollable = column.scrollHeight - column.clientHeight > 1;
+                column.classList.toggle('is-scrollable', isScrollable);
+            };
+
+            let rafId = 0;
+            const scheduleSync = () => {
+                cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(syncAppInfoScrollState);
+            };
+
+            window.addEventListener('load', scheduleSync);
+            window.addEventListener('resize', scheduleSync);
+            desktopQuery.addEventListener('change', scheduleSync);
+        })();
+    </script>
     <script src="assets/main.js"></script>
 </body>
 </html>

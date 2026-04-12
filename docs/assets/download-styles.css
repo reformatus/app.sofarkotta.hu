@@ -5,37 +5,48 @@
 
 .download-track-shell {
     border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    border-radius: 14px;
     background: #ffffff;
     overflow: hidden;
 }
 
 .download-track-tabs {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    background: #e2e8f0;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    background: #f3f4f6;
+}
+
+.download-track-tabs[data-layout='stacked'] {
+    grid-template-columns: 1fr;
 }
 
 .track-tab {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: 12px;
-    min-height: 60px;
+    gap: 10px;
+    min-height: 64px;
     padding: 0 18px;
     background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
     position: relative;
+    cursor: pointer;
 }
 
 .track-tab + .track-tab {
     border-left: 1px solid #e2e8f0;
 }
 
+.download-track-tabs[data-layout='stacked'] .track-tab + .track-tab {
+    border-left: none;
+    border-top: 1px solid #e2e8f0;
+}
+
+.track-tab:not(.selected) {
+    box-shadow: inset 0 -1px 0 #e2e8f0;
+}
+
 .track-tab.selected {
     background: #ffffff;
-    border-bottom-color: #ffffff;
-    margin-bottom: -1px;
     z-index: 1;
 }
 
@@ -43,11 +54,15 @@
     opacity: 0.55;
 }
 
+.track-tab:hover:not(.selected):not(.disabled) {
+    background: #f1f5f9;
+}
+
 .track-tab-select {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 12px;
+    gap: 4px 10px;
     width: 100%;
     background: transparent;
     border: none;
@@ -64,23 +79,26 @@
 }
 
 .track-tab-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
     color: #111827;
+    min-width: 0;
 }
 
 .track-tab-version {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #64748b;
     justify-self: end;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .track-info-button {
     padding: 0;
     border: none;
     background: transparent;
-    color: #64748b;
+    color: #475569;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -88,13 +106,27 @@
 }
 
 .track-info-button .material-icons {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.track-info-button:hover:not(:disabled) {
+    color: #334155;
 }
 
 .download-track-content {
-    padding: 18px;
+    padding: 16px;
     background: #ffffff;
-    border-top: 1px solid #e2e8f0;
+}
+
+.download-priority-block {
+    margin-bottom: 18px;
+}
+
+.download-secondary-title {
+    margin: 0 0 10px 2px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
 }
 
 .download-rows {
@@ -107,7 +139,7 @@
     grid-template-columns: auto 1fr auto;
     gap: 16px;
     padding: 12px;
-    border-radius: 14px;
+    border-radius: 12px;
     border: 1px solid #e2e8f0;
     background-color: #ffffff;
     align-items: center;
@@ -118,6 +150,12 @@
     cursor: not-allowed;
 }
 
+.download-row.featured {
+    border-color: #cbd5e1;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
 .download-row .platform-icon {
     width: 44px;
     height: 44px;
@@ -125,7 +163,7 @@
     align-items: center;
     justify-content: center;
     background: #edf2f7;
-    border-radius: 12px;
+    border-radius: 10px;
     color: #4a5568;
 }
 
@@ -160,7 +198,7 @@
 
 .download-option {
     padding: 10px 14px;
-    border-radius: 12px;
+    border-radius: 10px;
     background-color: #f3f4f6;
     font-size: 13px;
     font-weight: 600;
@@ -177,6 +215,15 @@
     background-color: #55928e;
     color: #ffffff;
     border-color: #55928e;
+}
+
+.download-option:hover {
+    background-color: #e8edf3;
+}
+
+.download-option.primary:hover {
+    background-color: #4b817d;
+    border-color: #4b817d;
 }
 
 .download-option .material-icons {
@@ -212,7 +259,7 @@
 
 .store-btn.cancel-btn:hover {
     border-color: #c2a03f;
-    background: #fefcf3;
+    background: #eceff3;
 }
 
 .store-btn .material-icons {
@@ -227,10 +274,15 @@
     width: min(680px, calc(100vw - 32px));
     max-height: calc(100vh - 32px);
     box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22);
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+    margin: auto;
+    inset: 0;
 }
 
 .release-details-dialog::backdrop {
     background: rgba(15, 23, 42, 0.36);
+    opacity: 0;
 }
 
 .release-details-panel {
@@ -239,10 +291,51 @@
     color: #1f2937;
 }
 
-.release-details-close-row {
+.release-details-dialog[open] {
+    animation: releaseDialogIn 0.22s ease-out forwards;
+}
+
+.release-details-dialog[open]::backdrop {
+    animation: releaseBackdropIn 0.22s ease-out forwards;
+}
+
+.release-details-dialog.is-closing {
+    animation: releaseDialogOut 0.18s ease-in forwards;
+}
+
+.release-details-dialog.is-closing::backdrop {
+    animation: releaseBackdropOut 0.18s ease-in forwards;
+}
+
+.release-details-title {
+    font-size: 32px;
+    line-height: 1.1;
+    margin: 0 0 6px 0;
+}
+
+.release-details-tag {
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.release-details-header {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 8px;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.release-details-heading {
+    min-width: 0;
+}
+
+.release-details-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 0 0 auto;
 }
 
 .release-details-close {
@@ -258,34 +351,14 @@
     justify-content: center;
 }
 
-.release-details-track {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #9a5e2f;
-    margin-bottom: 8px;
-}
-
-.release-details-title {
-    font-size: 28px;
-    line-height: 1.2;
-    margin: 0 0 6px 0;
-}
-
-.release-details-tag {
-    font-size: 14px;
-    font-weight: 600;
-    color: #6b7280;
-    margin-bottom: 18px;
-}
-
 .release-details-body {
     font-size: 15px;
     line-height: 1.6;
     color: #374151;
     max-height: 45vh;
     overflow: auto;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
 }
 
 .release-details-body h1,
@@ -304,10 +377,33 @@
 
 .release-details-link {
     display: inline-flex;
-    margin-top: 18px;
-    color: #55928e;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid #dbe3eb;
+    background: #f8fafc;
+    color: #334155;
     text-decoration: none;
     font-weight: 600;
+    font-size: 14px;
+}
+
+.release-details-link svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+}
+
+.release-details-link:hover {
+    background: #eef2f7;
+    border-color: #cbd5e1;
+}
+
+.release-details-close:hover {
+    background: #e8edf3;
+    color: #334155;
 }
 
 .download-popover-content {
@@ -352,7 +448,7 @@
 
 .tippy-box[data-theme~='light-border'] {
     border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
     color: #1f2937;
     background: #ffffff;
@@ -363,22 +459,12 @@
 }
 
 @media (max-width: 640px) {
-    .download-track-tabs {
-        grid-template-columns: 1fr;
-    }
-
-    .track-tab + .track-tab {
-        border-left: none;
-        border-top: 1px solid #b9c0c9;
-    }
-
     .track-tab {
         padding: 14px 16px;
         min-height: 56px;
     }
 
-    .track-tab-title,
-    .track-tab-version {
+    .track-tab-title {
         font-size: 16px;
     }
 
@@ -409,5 +495,55 @@
 
     .release-details-title {
         font-size: 24px;
+    }
+
+    .release-details-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .release-details-actions {
+        justify-content: space-between;
+    }
+}
+
+@keyframes releaseDialogIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes releaseDialogOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+    }
+}
+
+@keyframes releaseBackdropIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes releaseBackdropOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }

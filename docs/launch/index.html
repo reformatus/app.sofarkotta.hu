@@ -18,37 +18,36 @@
         </a>
         <h1 class="app-name"><a href="https://app.sofarkotta.hu/" target="_blank">Sófár Hangoló</a></h1>
         <p class="description">
-            Nyisd meg a Sófár Hangoló alkalmazást a linkelt tartalomhoz való hozzáféréshez.
+            Nyisd meg a Sófár Hangoló appot a linkelt tartalomhoz való hozzáféréshez.
         </p>
         <p class="description" id="linkDescription"></p>
         <div class="button-container">
             <div class="download-section">
-                <label class="download-label">Alkalmazás letöltése</label>
-                <div class="btn btn-primary btn-with-options" id="downloadBtnContainer">
-                    <a href="#" class="btn-main" id="downloadBtn">
-                        <span class="material-icons">download</span>
-                        <span id="downloadText">Alkalmazás letöltése</span>
-                    </a>
+                <div class="download-label-row">
+                    <label class="download-label">App letöltése</label>
                     <button class="btn-options" onclick="showStoreDialog()" title="További letöltési lehetőségek">
                         <span class="material-icons">settings</span>
                     </button>
                 </div>
+                <div class="launch-download-row-wrap">
+                    <div id="launchDownloadCardSlot"></div>
+                </div>
             </div>
             <button class="btn btn-secondary" type="button" id="webAppBtn">
                 <span class="material-icons">public</span>
-                Megnyitás webalkalmazásban
+                Megnyitás böngészőben
             </button>
 
             <div class="download-section">
                 <label class="download-label visible">Már telepítetted?</label>
                 <button class="btn btn-tertiary" type="button" id="openInAppBtn">
                     <span class="material-icons">launch</span>
-                    Tovább az alkalmazásra
+                    App megnyitása
                 </button>
             </div>
         </div>
-    </div> <!-- Store selection dialog -->
-    <div class="store-dialog" id="storeDialog">
+    </div>
+    <dialog class="store-dialog" id="storeDialog">
         <div class="dialog-content">
             <h2 class="dialog-title">Letöltés</h2>
             <div class="store-options" id="dialogDownloadOptions">
@@ -59,7 +58,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </dialog>
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>

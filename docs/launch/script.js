@@ -2,56 +2,40 @@
 // Note: Using script tags in the HTML file to load shared-config.js and common.js before this file
 
 function updateDownloadButton() {
-    const platformId = detectPlatform();
-    const downloadBtn = document.getElementById('downloadBtn');
-    const downloadText = document.getElementById('downloadText');
-    const downloadBtnContainer = document.getElementById('downloadBtnContainer');
+    const cardSlot = document.getElementById('launchDownloadCardSlot');
+    if (!cardSlot) {
+        return;
+    }
 
-    // Add smooth transition for text change
-    downloadBtn.style.opacity = '0.7';
-    
-    setTimeout(() => {
-        try {
-            const preferred = platformId ? getPreferredPlatformOption(platformId) : null;
-
-            if (platformId && preferred && preferred.emphasis !== 'none') {
-                downloadText.textContent = preferred.name;
-                downloadBtn.href = preferred.url;
-                downloadBtn.onclick = null;
-
-                downloadBtnContainer.classList.add('platform-detected');
-                downloadBtnContainer.classList.toggle('beta-button', preferred.track.id === 'prerelease');
-            } else {
-                downloadBtn.href = '#';
-                downloadText.textContent = 'Alkalmazás letöltése';
-                downloadBtn.onclick = function(e) {
-                    e.preventDefault();
-                    showStoreDialog();
-                };
-                
-                downloadBtnContainer.classList.remove('platform-detected');
-                downloadBtnContainer.classList.remove('beta-button');
-            }
-        } catch (error) {
-            console.error("Error updating download button:", error);
-            downloadBtn.href = '#';
-            downloadText.textContent = 'Alkalmazás letöltése';
-            downloadBtn.onclick = function(e) {
-                e.preventDefault();
-                showStoreDialog();
-            };
-            
-            downloadBtnContainer.classList.remove('platform-detected');
-            downloadBtnContainer.classList.remove('beta-button');
-        }
-          // Restore opacity
-        downloadBtn.style.opacity = '1';
-    }, 100);
+    try {
+        const track = getAvailableTrack(selectedDownloadTrack);
+        const preferredMarkup = track ? buildPreferredPlatformMarkup(track) : '';
+        cardSlot.innerHTML = preferredMarkup || `
+            <button class="launch-download-fallback" type="button" onclick="showStoreDialog()">
+                <span class="material-icons">download</span>
+                <span>App letöltése</span>
+            </button>
+        `;
+    } catch (error) {
+        console.error("Error updating download button:", error);
+        cardSlot.innerHTML = `
+            <button class="launch-download-fallback" type="button" onclick="showStoreDialog()">
+                <span class="material-icons">download</span>
+                <span>App letöltése</span>
+            </button>
+        `;
+    }
 }
 
 // Close dialog when clicking outside
 document.getElementById('storeDialog').addEventListener('click', function(e) {
-    if (e.target === this) {
+    const rect = this.getBoundingClientRect();
+    const clickedBackdrop =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
+    if (clickedBackdrop) {
         closeDialog();
     }
 });

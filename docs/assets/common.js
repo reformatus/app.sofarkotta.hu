@@ -1,5 +1,15 @@
 let selectedDownloadTrack = 'stable';
 let downloadPopoverInstances = [];
+const STACKED_TRACK_TABS_MAX_WIDTH = 420;
+
+function syncAllTrackTabLayouts() {
+  document.querySelectorAll('.download-track-shell').forEach((shell) => {
+    const container = shell.parentElement;
+    if (container) {
+      syncTrackTabLayout(container);
+    }
+  });
+}
 
 function getDownloadConfig() {
   return window.sofarSharedConfig?.downloads ?? { tracks: {} };
@@ -76,11 +86,14 @@ function createTrackHeaderMarkup(trackId, track, fallbackTitle) {
   const selected = track?.id === selectedDownloadTrack;
   const version = track?.version ?? 'Nincs';
   return `
-    <div class="track-tab${selected ? ' selected' : ''}${track ? '' : ' disabled'}">
+    <div
+      class="track-tab${selected ? ' selected' : ''}${track ? '' : ' disabled'}"
+      data-track-id="${trackId}"
+      ${track ? '' : 'aria-disabled="true"'}
+    >
       <button
         type="button"
         class="track-tab-select"
-        data-track-id="${trackId}"
         ${track ? '' : 'disabled'}
       >
         <span class="track-tab-title">${fallbackTitle}</span>
@@ -139,51 +152,77 @@ function createDownloadPopoverContent(option) {
   `;
 }
 
-function buildPlatformRows(track) {
-  return Object.entries(track.platforms)
-    .map(([, platform]) => {
-      const storeOptions = platform.storeOptions ?? [];
-      const downloadOptions = platform.downloadOptions ?? [];
-      const hasAnyOption = storeOptions.length > 0 || downloadOptions.length > 0;
+function buildPlatformRows(track, preferredPlatformId = null) {
+  const entries = Object.entries(track.platforms);
+  const preferredEntry = preferredPlatformId
+    ? entries.find(([platformId]) => platformId === preferredPlatformId) ?? null
+    : null;
+  const remainingEntries = preferredEntry
+    ? entries.filter(([platformId]) => platformId !== preferredPlatformId)
+    : entries;
 
-      const optionMarkup = [
-        ...storeOptions.map(
-          (option) => `
-            <a class="download-option primary store-option" href="${option.url}" target="_blank" rel="noreferrer">
-              <span class="material-icons">storefront</span>
-              <span class="download-option-title">${escapeHtml(option.name)}</span>
-            </a>
-          `,
-        ),
-        ...downloadOptions.map(
-          (option) => `
-            <a
-              class="download-option direct-download-option"
-              href="${option.url}"
-              target="_blank"
-              rel="noreferrer"
-              data-popover-content="${escapeHtml(createDownloadPopoverContent(option))}"
-            >
-              <span class="material-icons">download</span>
-              <span class="download-option-title">${escapeHtml(option.name)}</span>
-            </a>
-          `,
-        ),
-      ].join('');
+  const renderRow = ([, platform], featured = false) => {
+    const storeOptions = platform.storeOptions ?? [];
+    const downloadOptions = platform.downloadOptions ?? [];
+    const hasAnyOption = storeOptions.length > 0 || downloadOptions.length > 0;
 
-      return `
-        <div class="download-row${hasAnyOption ? '' : ' disabled'}">
-          <div class="platform-icon">
-            <span class="material-icons">${platform.icon}</span>
-          </div>
-          <div class="download-info">
-            <div class="platform-name">${escapeHtml(platform.name)}</div>
-          </div>
-          <div class="download-options">${hasAnyOption ? optionMarkup : ''}</div>
+    const optionMarkup = [
+      ...storeOptions.map(
+        (option) => `
+          <a class="download-option primary store-option" href="${option.url}" target="_blank" rel="noreferrer">
+            <span class="material-icons">storefront</span>
+            <span class="download-option-title">${escapeHtml(option.name)}</span>
+          </a>
+        `,
+      ),
+      ...downloadOptions.map(
+        (option) => `
+          <a
+            class="download-option direct-download-option"
+            href="${option.url}"
+            target="_blank"
+            rel="noreferrer"
+            data-popover-content="${escapeHtml(createDownloadPopoverContent(option))}"
+          >
+            <span class="material-icons">download</span>
+            <span class="download-option-title">${escapeHtml(option.name)}</span>
+          </a>
+        `,
+      ),
+    ].join('');
+
+    return `
+      <div class="download-row${hasAnyOption ? '' : ' disabled'}${featured ? ' featured' : ''}">
+        <div class="platform-icon">
+          <span class="material-icons">${platform.icon}</span>
         </div>
-      `;
+        <div class="download-info">
+          <div class="platform-name">${escapeHtml(platform.name)}</div>
+        </div>
+        <div class="download-options">${hasAnyOption ? optionMarkup : ''}</div>
+      </div>
+    `;
+  };
+
+  return {
+    preferredMarkup: preferredEntry ? renderRow(preferredEntry, true) : '',
+    remainingMarkup: remainingEntries
+    .map(([, platform]) => {
+      return renderRow([null, platform], false);
     })
-    .join('');
+    .join(''),
+  };
+}
+
+function buildPreferredPlatformMarkup(track) {
+  const platformId = detectPlatform();
+  const preferredOption = platformId ? getPreferredPlatformOption(platformId) : null;
+  if (!platformId || !preferredOption || preferredOption.emphasis === 'none') {
+    return '';
+  }
+
+  const { preferredMarkup } = buildPlatformRows(track, platformId);
+  return preferredMarkup;
 }
 
 function ensureReleaseDetailsDialog() {
@@ -197,18 +236,24 @@ function ensureReleaseDetailsDialog() {
   dialog.className = 'release-details-dialog';
   dialog.innerHTML = `
     <div class="release-details-panel">
-      <form method="dialog" class="release-details-close-row">
-        <button class="release-details-close" type="submit" aria-label="Bezárás">
-          <span class="material-icons">close</span>
-        </button>
-      </form>
       <div class="release-details-header">
-        <div class="release-details-track" id="releaseDetailsTrack"></div>
-        <h3 class="release-details-title" id="releaseDetailsTitle"></h3>
-        <div class="release-details-tag" id="releaseDetailsTag"></div>
+        <div class="release-details-heading">
+          <h3 class="release-details-title" id="releaseDetailsTitle"></h3>
+          <div class="release-details-tag" id="releaseDetailsTag"></div>
+        </div>
+        <div class="release-details-actions">
+          <a class="release-details-link" id="releaseDetailsLink" href="#" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.2.8-.6v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.6-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.6-1.4-5.6-6A4.7 4.7 0 0 1 6.4 8c-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.4 1.3a11.5 11.5 0 0 1 6.2 0c2.3-1.6 3.4-1.3 3.4-1.3.7 1.7.3 2.9.1 3.2a4.7 4.7 0 0 1 1.3 3.3c0 4.6-2.9 5.7-5.7 6 .5.4.9 1.1.9 2.3v3.4c0 .4.2.7.8.6A12 12 0 0 0 12 .5Z"/>
+            </svg>
+            <span>Megnyitás a GitHubon</span>
+          </a>
+          <button class="release-details-close" type="button" aria-label="Bezárás" onclick="closeReleaseDetails()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
       </div>
       <div class="release-details-body" id="releaseDetailsBody"></div>
-      <a class="release-details-link" id="releaseDetailsLink" href="#" target="_blank" rel="noreferrer">Megnyitás a GitHubon</a>
     </div>
   `;
   dialog.addEventListener('click', (event) => {
@@ -219,7 +264,7 @@ function ensureReleaseDetailsDialog() {
       event.clientY < rect.top ||
       event.clientY > rect.bottom;
     if (clickedBackdrop) {
-      dialog.close();
+      closeReleaseDetails();
     }
   });
   document.body.appendChild(dialog);
@@ -233,7 +278,6 @@ function showReleaseDetails(trackId) {
   }
 
   const dialog = ensureReleaseDetailsDialog();
-  document.getElementById('releaseDetailsTrack').textContent = track.title;
   document.getElementById('releaseDetailsTitle').textContent = track.release.title || track.version;
   document.getElementById('releaseDetailsTag').textContent = track.release.tag || track.version;
   document.getElementById('releaseDetailsBody').innerHTML =
@@ -243,11 +287,35 @@ function showReleaseDetails(trackId) {
   link.href = track.release.url;
   link.textContent = 'Megnyitás a GitHubon';
 
+  dialog.classList.remove('is-closing');
   if (typeof dialog.showModal === 'function') {
     dialog.showModal();
   } else {
     dialog.setAttribute('open', 'open');
   }
+}
+
+function closeReleaseDetails() {
+  const dialog = document.getElementById('releaseDetailsDialog');
+  if (!dialog || !dialog.hasAttribute('open')) {
+    return;
+  }
+
+  dialog.classList.add('is-closing');
+  window.setTimeout(() => {
+    dialog.classList.remove('is-closing');
+    dialog.close();
+  }, 180);
+}
+
+function syncTrackTabLayout(containerElement) {
+  const tabs = containerElement.querySelector('.download-track-tabs');
+  if (!tabs) {
+    return;
+  }
+
+  const width = Math.round(tabs.getBoundingClientRect().width);
+  tabs.dataset.layout = width > 0 && width <= STACKED_TRACK_TABS_MAX_WIDTH ? 'stacked' : 'inline';
 }
 
 function destroyDownloadPopovers() {
@@ -278,17 +346,41 @@ function initializeDownloadPopovers(containerElement) {
   );
 }
 
-function renderDownloadTrackContent(containerElement, track) {
+function renderDownloadTrackContent(containerElement, track, options = {}) {
   const contentElement = containerElement.querySelector('#downloadTrackContent');
   if (!contentElement) {
     return;
   }
-  contentElement.innerHTML = track
-    ? `<div class="download-rows">${buildPlatformRows(track) || formatEmptyState()}</div>`
-    : formatEmptyState();
+  if (!track) {
+    contentElement.innerHTML = formatEmptyState();
+    return;
+  }
+
+  const preferredPlatformId = options.surfacePreferred
+    ? (() => {
+        const platformId = detectPlatform();
+        const preferredOption = platformId ? getPreferredPlatformOption(platformId) : null;
+        return preferredOption && preferredOption.emphasis !== 'none' ? platformId : null;
+      })()
+    : null;
+  const { preferredMarkup, remainingMarkup } = buildPlatformRows(track, preferredPlatformId);
+
+  contentElement.innerHTML = `
+    ${
+      preferredMarkup
+        ? `
+      <div class="download-priority-block">
+        ${preferredMarkup}
+      </div>
+      <div class="download-secondary-title">További platformok</div>
+    `
+        : ''
+    }
+    <div class="download-rows">${remainingMarkup || formatEmptyState()}</div>
+  `;
 }
 
-function renderDownloadPanel(containerId, includeCancel = false) {
+function renderDownloadPanel(containerId, includeCancel = false, options = {}) {
   const containerElement = document.getElementById(containerId);
   if (!containerElement) {
     return;
@@ -309,12 +401,16 @@ function renderDownloadPanel(containerId, includeCancel = false) {
     }
   `;
 
-  renderDownloadTrackContent(containerElement, track);
+  renderDownloadTrackContent(containerElement, track, options);
+  syncTrackTabLayout(containerElement);
 
   containerElement.querySelectorAll('[data-track-id]').forEach((button) => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (event) => {
+      if (event.target.closest('[data-track-info]') || button.classList.contains('disabled')) {
+        return;
+      }
       setSelectedDownloadTrack(button.getAttribute('data-track-id'));
-      renderDownloadPanel(containerId, includeCancel);
+      renderDownloadPanel(containerId, includeCancel, options);
       if (typeof updateDownloadButton === 'function') {
         updateDownloadButton();
       }
@@ -334,7 +430,9 @@ function renderDownloadPanel(containerId, includeCancel = false) {
 function generateDownloadRows(containerId, includeCancel = false) {
   const downloads = getDownloadConfig();
   setSelectedDownloadTrack(downloads.defaultTrack ?? 'stable');
-  renderDownloadPanel(containerId, includeCancel);
+  renderDownloadPanel(containerId, includeCancel, {
+    surfacePreferred: !includeCancel,
+  });
 }
 
 function getPreferredPlatformOption(platformId) {
@@ -358,11 +456,35 @@ function getPreferredPlatformOption(platformId) {
 }
 
 function showStoreDialog() {
+  const dialog = document.getElementById('storeDialog');
+  if (!dialog) {
+    return;
+  }
+  dialog.classList.remove('is-closing');
+  if (typeof dialog.showModal === 'function') {
+    dialog.showModal();
+  } else {
+    dialog.setAttribute('open', 'open');
+  }
   renderDownloadPanel('dialogDownloadOptions', true);
-  document.getElementById('storeDialog').classList.add('show');
+  window.requestAnimationFrame(() => {
+    syncAllTrackTabLayouts();
+  });
 }
 
 function closeDialog() {
   destroyDownloadPopovers();
-  document.getElementById('storeDialog').classList.remove('show');
+  const dialog = document.getElementById('storeDialog');
+  if (!dialog || !dialog.hasAttribute('open')) {
+    return;
+  }
+  dialog.classList.add('is-closing');
+  window.setTimeout(() => {
+    dialog.classList.remove('is-closing');
+    dialog.close();
+  }, 180);
 }
+
+window.addEventListener('resize', () => {
+  syncAllTrackTabLayouts();
+});
