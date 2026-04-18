@@ -5,38 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Átirányítás...</title>
     <script>
-        // GitHub Pages SPA redirect script
-        // This script handles client-side routing for GitHub Pages
         (function() {
-            var path = window.location.pathname;
-            var search = window.location.search;
-            var hash = window.location.hash;
-            
-            // Recover deep links into the Flutter web app by redirecting back
-            // to the app entry point and letting the app restore the path.
-            if (path.startsWith('/web/') && path !== '/web/' && path !== '/web/index.html') {
-                sessionStorage.setItem('originalWebPath', path + search + hash);
-                window.location.replace(window.location.origin + '/web/');
-            } else if (path === '/web') {
-                window.location.replace(window.location.origin + '/web/');
-            }
-            // Check if this is a launch path that's not already at the launch index
-            else if (path.startsWith('/launch/') && path !== '/launch/' && path !== '/launch/index.html') {
-                // Store the original path in session storage so the launch page can access it
-                sessionStorage.setItem('originalPath', path + search + hash);
-                // Redirect to the launch page
-                window.location.replace(window.location.origin + '/launch/');
-            } else if (path === '/launch') {
-                // Handle /launch without trailing slash
-                window.location.replace(window.location.origin + '/launch/');
-            } else {
-                // For other 404s, redirect to the main page
-                window.location.replace(window.location.origin + '/');
-            }
+            var target = 'https://app.sofarhangolo.hu' +
+                window.location.pathname +
+                window.location.search +
+                window.location.hash;
+            window.location.replace(target);
         })();
     </script>
 </head>
 <body>
-    <p>Átirányítás...</p>
+    <p><a href="https://app.sofarhangolo.hu/">Továbblépés az új oldalra</a></p>
 </body>
 </html>

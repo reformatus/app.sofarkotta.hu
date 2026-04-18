@@ -1,70 +1,20 @@
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sófár Hangoló - Indítás</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="../assets/download-styles.css">
+    <title>Átirányítás...</title>
+    <script>
+        (function() {
+            var target = 'https://app.sofarhangolo.hu' +
+                window.location.pathname +
+                window.location.search +
+                window.location.hash;
+            window.location.replace(target);
+        })();
+    </script>
 </head>
-
 <body>
-    <div class="launch-card">
-        <a href="https://app.sofarkotta.hu/" target="_blank" class="app-icon-link">
-            <img src="../assets/sofar_dalapp_rounded.svg" alt="Sófár Hangoló ikon" class="app-icon">
-        </a>
-        <h1 class="app-name"><a href="https://app.sofarkotta.hu/" target="_blank">Sófár Hangoló</a></h1>
-        <p class="description">
-            Nyisd meg a Sófár Hangoló appot a linkelt tartalomhoz való hozzáféréshez.
-        </p>
-        <p class="description" id="linkDescription"></p>
-        <div class="button-container">
-            <div class="download-section">
-                <div class="download-label-row">
-                    <label class="download-label">App letöltése</label>
-                    <button class="btn-options" onclick="showStoreDialog()" title="További letöltési lehetőségek">
-                        <span class="material-icons">settings</span>
-                    </button>
-                </div>
-                <div class="launch-download-row-wrap">
-                    <div id="launchDownloadCardSlot"></div>
-                </div>
-            </div>
-            <button class="btn btn-secondary" type="button" id="webAppBtn">
-                <span class="material-icons">public</span>
-                Megnyitás böngészőben
-            </button>
-
-            <div class="download-section">
-                <label class="download-label visible">Már telepítetted?</label>
-                <button class="btn btn-tertiary" type="button" id="openInAppBtn">
-                    <span class="material-icons">launch</span>
-                    App megnyitása
-                </button>
-            </div>
-        </div>
-    </div>
-    <dialog class="store-dialog" id="storeDialog">
-        <div class="dialog-content">
-            <h2 class="dialog-title">Letöltés</h2>
-            <div class="store-options" id="dialogDownloadOptions">
-                <!-- Download options will be dynamically generated here -->
-                <button class="store-btn cancel-btn" onclick="closeDialog()">
-                    <span class="material-icons">close</span>
-                    Mégse
-                </button>
-            </div>
-        </div>
-    </dialog>
-
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-    <script src="../assets/shared-config.js"></script>
-    <script src="../assets/common.js"></script>
-    <script src="script.js"></script>
+    <p><a href="https://app.sofarhangolo.hu/launch/">Továbblépés az új oldalra</a></p>
 </body>
-
 </html>
