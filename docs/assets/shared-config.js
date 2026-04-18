@@ -68,12 +68,12 @@ window.sofarSharedConfig = {
       "prerelease": {
         "id": "prerelease",
         "title": "Előzetes kiadás",
-        "version": "1.1.1+111",
+        "version": "1.1.3+1010300",
         "release": {
-          "title": "1.1.1 (beta)",
-          "tag": "1.1.1+111",
-          "descriptionHtml": "<p><strong>Tesztverzió!</strong></p>\n<h3>Újdonságok:</h3>\n<ul>\n<li>Tömörített listamegosztó linkek (Egy QR kódba 20+ éneket tartalmazó lista is elfér!)</li>\n<li><a href=\"https://app.sofarkotta.hu/web\" rel=\"nofollow\">Web kiadás</a> <em>(Sófár Kottatár elérhető hamarosan)</em></li>\n<li>Desktop kiadások (linux, windows, macos) <em>(Publikálás hamarosan)</em></li>\n<li>Stabilitás\n<ul>\n<li>Hibakezelés újragondolva</li>\n<li>Daltárfrissítés újragondolva</li>\n<li>Listakezelés újragondolva</li>\n</ul>\n</li>\n</ul>\n<h3>Ideiglenes funkciócsökkenés:</h3>\n<ul>\n<li>Szöveges szűrés csak címben és szövegben működik</li>\n</ul>",
-          "url": "https://github.com/reformatus/sofarhangolo/releases/tag/1.1.1%2B111"
+          "title": "1.1.3 (beta)",
+          "tag": "1.1.3+1010300",
+          "descriptionHtml": "<p><strong>Tesztverzió!</strong></p>\n<h3>Újdonságok:</h3>\n<ul>\n<li>Aktív lista folyamatosan képernyőn van és elérhető\n<ul>\n<li>Dalok könnyű hozzáadása kiválasztott listához</li>\n</ul>\n</li>\n<li>Tömörített listamegosztó linkek (Egy QR kódba 20+ éneket tartalmazó lista is elfér!)</li>\n<li><a href=\"https://app.sofarkotta.hu/web\" rel=\"nofollow\">Web kiadás</a> <em>(Sófár Kottatár elérhető hamarosan)</em></li>\n<li>Desktop kiadások (linux, windows, macos) <em>(Publikálás hamarosan)</em></li>\n<li>Stabilitás\n<ul>\n<li>Hibakezelés újragondolva</li>\n<li>Daltárfrissítés újragondolva</li>\n<li>Listakezelés újragondolva</li>\n</ul>\n</li>\n</ul>\n<h3>Ideiglenes funkciócsökkenés:</h3>\n<ul>\n<li>Szöveges szűrés csak címben és szövegben működik</li>\n</ul>",
+          "url": "https://github.com/reformatus/sofarhangolo/releases/tag/1.1.3%2B1010300"
         },
         "platforms": {
           "android": {
@@ -104,22 +104,22 @@ window.sofarSharedConfig = {
             "storeOptions": [],
             "downloadOptions": [
               {
-                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.1%2B111/sofar-hangolo-1.1.1-windows-store.msix",
+                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.3%2B1010300/sofar-hangolo-1.1.3-windows-store.msix",
                 "name": "MSIX csomag",
-                "fileName": "sofar-hangolo-1.1.1-windows-store.msix",
+                "fileName": "sofar-hangolo-1.1.3-windows-store.msix",
                 "downloadCount": 0,
                 "downloadCountLabel": "0 letöltés",
-                "sizeBytes": 23094422,
-                "sizeLabel": "22.0 MB"
+                "sizeBytes": 23159123,
+                "sizeLabel": "22.1 MB"
               },
               {
-                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.1%2B111/sofar-hangolo-1.1.1-windows-x64-setup.exe",
+                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.3%2B1010300/sofar-hangolo-1.1.3-windows-x64-setup.exe",
                 "name": "Telepítő",
-                "fileName": "sofar-hangolo-1.1.1-windows-x64-setup.exe",
+                "fileName": "sofar-hangolo-1.1.3-windows-x64-setup.exe",
                 "downloadCount": 0,
                 "downloadCountLabel": "0 letöltés",
-                "sizeBytes": 17547791,
-                "sizeLabel": "16.7 MB"
+                "sizeBytes": 17591770,
+                "sizeLabel": "16.8 MB"
               }
             ]
           },
@@ -129,13 +129,13 @@ window.sofarSharedConfig = {
             "storeOptions": [],
             "downloadOptions": [
               {
-                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.1%2B111/Sofar-Hangolo-1.1.1-macos.dmg",
+                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.3%2B1010300/Sofar-Hangolo-1.1.3-macos.dmg",
                 "name": "DMG",
-                "fileName": "Sofar-Hangolo-1.1.1-macos.dmg",
-                "downloadCount": 2,
-                "downloadCountLabel": "2 letöltés",
-                "sizeBytes": 37590930,
-                "sizeLabel": "35.8 MB"
+                "fileName": "Sofar-Hangolo-1.1.3-macos.dmg",
+                "downloadCount": 0,
+                "downloadCountLabel": "0 letöltés",
+                "sizeBytes": 37773131,
+                "sizeLabel": "36.0 MB"
               }
             ]
           },
@@ -145,13 +145,13 @@ window.sofarSharedConfig = {
             "storeOptions": [],
             "downloadOptions": [
               {
-                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.1%2B111/sofar-hangolo-1.1.1-linux-x86_64.flatpak",
+                "url": "https://github.com/reformatus/sofarhangolo/releases/download/1.1.3%2B1010300/sofar-hangolo-1.1.3-linux-x86_64.flatpak",
                 "name": "Flatpak",
-                "fileName": "sofar-hangolo-1.1.1-linux-x86_64.flatpak",
-                "downloadCount": 1,
-                "downloadCountLabel": "1 letöltés",
-                "sizeBytes": 13248272,
-                "sizeLabel": "12.6 MB"
+                "fileName": "sofar-hangolo-1.1.3-linux-x86_64.flatpak",
+                "downloadCount": 0,
+                "downloadCountLabel": "0 letöltés",
+                "sizeBytes": 13283136,
+                "sizeLabel": "12.7 MB"
               }
             ]
           }
