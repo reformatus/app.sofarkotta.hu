@@ -5,10 +5,11 @@ window.sofarSharedConfig = {
       "stable": {
         "id": "stable",
         "title": "Stabil kiadás",
-        "version": "1.0.2+102",
+        "version": "1.0.2",
         "release": {
           "title": "1.0.2",
           "tag": "1.0.2+102",
+          "displayTag": "1.0.2",
           "descriptionHtml": "<p>Sürgősségi hibakezelés:<br>\n<strong>Adatbázis újraépítése indításkor</strong></p>\n<h3>FIGYELEM!</h3>\n<p>A művelet elérhetetlenné teszi az eddig készült listáidat! (Az adatok nem vesznek el)</p>",
           "url": "https://github.com/reformatus/sofarhangolo/releases/tag/1.0.2%2B102"
         },
@@ -68,10 +69,11 @@ window.sofarSharedConfig = {
       "prerelease": {
         "id": "prerelease",
         "title": "Előzetes kiadás",
-        "version": "1.1.3+1010300",
+        "version": "1.1.3",
         "release": {
           "title": "1.1.3 (beta)",
           "tag": "1.1.3+1010300",
+          "displayTag": "1.1.3",
           "descriptionHtml": "<p><strong>Tesztverzió!</strong></p>\n<h3>Újdonságok:</h3>\n<ul>\n<li>Aktív lista folyamatosan képernyőn van és elérhető\n<ul>\n<li>Dalok könnyű hozzáadása kiválasztott listához</li>\n</ul>\n</li>\n<li>Tömörített listamegosztó linkek (Egy QR kódba 20+ éneket tartalmazó lista is elfér!)</li>\n<li><a href=\"https://app.sofarkotta.hu/web\" rel=\"nofollow\">Web kiadás</a> <em>(Sófár Kottatár elérhető hamarosan)</em></li>\n<li>Desktop kiadások (linux, windows, macos) <em>(Publikálás hamarosan)</em></li>\n<li>Stabilitás\n<ul>\n<li>Hibakezelés újragondolva</li>\n<li>Daltárfrissítés újragondolva</li>\n<li>Listakezelés újragondolva</li>\n</ul>\n</li>\n</ul>\n<h3>Ideiglenes funkciócsökkenés:</h3>\n<ul>\n<li>Szöveges szűrés csak címben és szövegben működik</li>\n</ul>",
           "url": "https://github.com/reformatus/sofarhangolo/releases/tag/1.1.3%2B1010300"
         },

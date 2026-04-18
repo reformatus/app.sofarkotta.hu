@@ -84,7 +84,7 @@ function escapeHtml(value) {
 
 function createTrackHeaderMarkup(trackId, track, fallbackTitle) {
   const selected = track?.id === selectedDownloadTrack;
-  const version = track?.version ?? 'Nincs';
+  const version = track?.release?.displayTag ?? track?.version ?? 'Nincs';
   return `
     <div
       class="track-tab${selected ? ' selected' : ''}${track ? '' : ' disabled'}"
@@ -279,7 +279,8 @@ function showReleaseDetails(trackId) {
 
   const dialog = ensureReleaseDetailsDialog();
   document.getElementById('releaseDetailsTitle').textContent = track.release.title || track.version;
-  document.getElementById('releaseDetailsTag').textContent = track.release.tag || track.version;
+  document.getElementById('releaseDetailsTag').textContent =
+    track.release.displayTag || track.version || track.release.tag;
   document.getElementById('releaseDetailsBody').innerHTML =
     track.release.descriptionHtml || '<p>Nincs kiadási leírás.</p>';
 
